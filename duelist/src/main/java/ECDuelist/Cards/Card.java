@@ -20,8 +20,13 @@ public class Card extends
 		this.settings = settings;
 	}
 
+	public String getPrefixedId() {
+		return settings.id;
+	}
 
-
+	public boolean isUnlocked() {
+		return true;
+	}
 
 	@Override
 	public void upgrade() {

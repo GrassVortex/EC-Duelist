@@ -4,6 +4,7 @@ import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardFactory;
 import basemod.BaseMod;
 import com.google.gson.Gson;
+import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,7 +32,12 @@ public class CardLibrary {
 
 	public void registerCards() {
 		for (int i = 0; i < cards.size(); i++) {
-			BaseMod.addCard(cards.get(i));
+			Card card = cards.get(i);
+			BaseMod.addCard(card);
+
+			if (card.isUnlocked()) {
+				UnlockTracker.unlockCard(card.getPrefixedId());
+			}
 		}
 	}
 
