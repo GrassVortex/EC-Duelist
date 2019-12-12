@@ -84,7 +84,23 @@ public class CardSettings {
 
 	public void print() {
 		System.out.printf("id %s%nname %s%ncost %d%ndescription %s%ntype %s%ncolor %s%nrarity %s%ntarget %s%nactions %s%nimage %s%n",
-				  id, name, cost, description, type, color, rarity, target, rawSettings.actions, image);
+				  id, name, cost, description, type, color, rarity, target, format(rawSettings.actions), image);
+	}
+
+	public static String format(String[] list) {
+		return format(list, ", ");
+	}
+
+	public static String format(String[] list, String separator) {
+		String result = "";
+		if (list.length > 0) {
+			result = list[0];
+		}
+		// Note that the loop starts at 1, not zero
+		for (int i = 1; i < list.length; i++) {
+			result += separator + list[i];
+		}
+		return result;
 	}
 
 	private void resolveSettings(CardLibrary library) {
@@ -102,6 +118,12 @@ public class CardSettings {
 		rarity = AbstractCard.CardRarity.valueOf(rawSettings.rarity);
 		target = AbstractCard.CardTarget.valueOf(rawSettings.target);
 		tags = AbstractCard.CardTags.valueOf(rawSettings.tags);
+
+		if (rawSettings.image != null && !rawSettings.image.isEmpty()) {
+			image = rawSettings.image;
+		} else {
+			image = "images/" + rawSettings.id + ".png";
+		}
 	}
 
 	private static class RawCardSettings {
@@ -115,10 +137,9 @@ public class CardSettings {
 		public String color;
 		public String rarity;
 		public String target;
+		// TODO make list
 		public String tags;
-
 		public String[] actions;
-
 		public String image;
 
 		public RawCardSettings clone() {

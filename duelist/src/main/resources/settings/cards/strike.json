@@ -8,6 +8,7 @@
   "rarity": "COMMON",
   "target": "ENEMY",
   "tags": "STRIKE",
-  "actions": [],
-  "image": "images/Attack.png"
+  "image": "images/Attack.png",
+  "actions": []
+
 }
