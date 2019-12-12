@@ -25,7 +25,7 @@ public class CardLibrary {
 	}
 
 	private Card loadCard(String cardId) {
-		return new Card(cardId);
+		return Card.createCard(cardId);
 	}
 
 	public void registerCards() {
