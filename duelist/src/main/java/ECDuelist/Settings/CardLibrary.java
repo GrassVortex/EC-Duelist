@@ -1,6 +1,7 @@
 package ECDuelist.Settings;
 
 import ECDuelist.Cards.Card;
+import ECDuelist.Cards.CardFactory;
 import basemod.BaseMod;
 import com.google.gson.Gson;
 
@@ -25,7 +26,7 @@ public class CardLibrary {
 	}
 
 	private Card loadCard(String cardId) {
-		return Card.createCard(cardId);
+		return CardFactory.createCard(cardId);
 	}
 
 	public void registerCards() {

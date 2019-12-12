@@ -58,7 +58,7 @@ public class CardSettings {
 	}
 
 	private static RawCardSettings mergeSettings(RawCardSettings base, RawCardSettings current) {
-		RawCardSettings finalSettings = current.clone();
+		RawCardSettings finalSettings = new RawCardSettings();
 		// The id and name should ALWAYS be from the current setting, not the base/parent
 		finalSettings.id = current.id;
 		finalSettings.name = current.name;
@@ -87,6 +87,7 @@ public class CardSettings {
 		name = rawSettings.name;
 		cost = Integer.parseInt(rawSettings.cost);
 
+		// TODO Translate description
 		// CardCrawlGame.languagePack
 		description = rawSettings.description;
 
@@ -97,7 +98,7 @@ public class CardSettings {
 		tags = AbstractCard.CardTags.valueOf(rawSettings.tags);
 	}
 
-	private class RawCardSettings {
+	private static class RawCardSettings {
 		public String[] bases;
 
 		public String id;
