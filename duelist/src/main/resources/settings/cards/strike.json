@@ -1,7 +1,13 @@
 {
-  "base": "attackBase",
-
   "id": "Strike",
   "name": "Strike",
-
+  "cost": "4",
+  "description": "test description",
+  "type": "ATTACK",
+  "color": "COLORLESS",
+  "rarity": "COMMON",
+  "target": "ALL_ENEMY",
+  "tags": "STRIKE",
+  "actions": [],
+  "image": "images/Attack.png"
 }

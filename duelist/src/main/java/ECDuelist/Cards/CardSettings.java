@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 
 public class CardSettings {
 
+	private static String modIdPrefix;
 	private RawCardSettings rawSettings;
 
 	public String id;
@@ -35,6 +36,13 @@ public class CardSettings {
 		}
 	}
 
+	public static void initialize() {
+		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cardLibrary.json");
+		Gson reader = new Gson();
+		CardLibrary.LibrarySettings settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), CardLibrary.LibrarySettings.class);
+
+		modIdPrefix = settings.modPrefix;
+	}
 
 	private static RawCardSettings loadCardSettings(String cardId) {
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cards/" + cardId + ".json");
@@ -83,7 +91,8 @@ public class CardSettings {
 	}
 
 	private void resolveSettings() {
-		id = rawSettings.id;
+		// Apply Prefix to the id in order to avoid conflicts with other mods
+		id = modIdPrefix + rawSettings.id;
 		name = rawSettings.name;
 		cost = Integer.parseInt(rawSettings.cost);
 

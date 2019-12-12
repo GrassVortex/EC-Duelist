@@ -17,11 +17,11 @@ public class CardLibrary {
 	public CardLibrary() {
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cardLibrary.json");
 		Gson reader = new Gson();
-		LibraryList list = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibraryList.class);
+		LibrarySettings list = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
 
 		cards = new ArrayList<Card>();
-		for (int i = 0; i < list.Cards.length; i++) {
-			cards.add(loadCard(list.Cards[i]));
+		for (int i = 0; i < list.cards.length; i++) {
+			cards.add(loadCard(list.cards[i]));
 		}
 	}
 
@@ -35,7 +35,8 @@ public class CardLibrary {
 		}
 	}
 
-	private class LibraryList {
-		public String[] Cards;
+	public class LibrarySettings {
+		public String[] cards;
+		public String modPrefix;
 	}
 }
