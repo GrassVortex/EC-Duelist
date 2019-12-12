@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 
 public class CardSettings {
 
-	private static String modIdPrefix;
 	private RawCardSettings rawSettings;
 
 	public String id;
@@ -25,10 +24,10 @@ public class CardSettings {
 	public AbstractCard.CardTags tags;
 	public String image;
 
-	public CardSettings(String cardId) {
+	public CardSettings(CardLibrary library, String cardId) {
 		try {
 			rawSettings = loadCardSettings(cardId);
-			resolveSettings();
+			resolveSettings(library);
 		} catch (NumberFormatException ex) {
 			throw new InitializationException("Invalid number for card '" + cardId + "'.", ex);
 		} catch (IllegalArgumentException ex) {
@@ -36,13 +35,6 @@ public class CardSettings {
 		}
 	}
 
-	public static void initialize() {
-		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cardLibrary.json");
-		Gson reader = new Gson();
-		CardLibrary.LibrarySettings settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), CardLibrary.LibrarySettings.class);
-
-		modIdPrefix = settings.modPrefix;
-	}
 
 	private static RawCardSettings loadCardSettings(String cardId) {
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cards/" + cardId + ".json");
@@ -56,7 +48,7 @@ public class CardSettings {
 			// are not overridden by earlier "more base" values.
 			for (int i = rawSettings.bases.length - 1; i >= 0; i--) {
 				RawCardSettings baseSettings = loadCardSettings(rawSettings.bases[i]);
-				currentSettings = mergeSettings(baseSettings, currentSettings);
+				currentSettings = mergeSettings(currentSettings, baseSettings);
 			}
 		} else {
 			currentSettings = rawSettings;
@@ -65,34 +57,39 @@ public class CardSettings {
 		return currentSettings;
 	}
 
-	private static RawCardSettings mergeSettings(RawCardSettings base, RawCardSettings current) {
+	private static RawCardSettings mergeSettings(RawCardSettings current, RawCardSettings base) {
 		RawCardSettings finalSettings = new RawCardSettings();
 		// The id and name should ALWAYS be from the current setting, not the base/parent
 		finalSettings.id = current.id;
 		finalSettings.name = current.name;
 
-		finalSettings.cost = coalesce(base.cost, current.cost);
-		finalSettings.description = coalesce(base.description, current.description);
-		finalSettings.type = coalesce(base.type, current.type);
-		finalSettings.color = coalesce(base.color, current.color);
-		finalSettings.rarity = coalesce(base.rarity, current.rarity);
-		finalSettings.target = coalesce(base.target, current.target);
-		finalSettings.actions = coalesce(base.actions, current.actions);
-		finalSettings.image = coalesce(base.image, current.image);
+		finalSettings.cost = coalesce(current.cost, base.cost);
+		finalSettings.description = coalesce(current.description, base.description);
+		finalSettings.type = coalesce(current.type, base.type);
+		finalSettings.color = coalesce(current.color, base.color);
+		finalSettings.rarity = coalesce(current.rarity, base.rarity);
+		finalSettings.target = coalesce(current.target, base.target);
+		finalSettings.actions = coalesce(current.actions, base.actions);
+		finalSettings.image = coalesce(current.image, base.image);
 		return finalSettings;
 	}
 
 	private static String coalesce(String a, String b) {
-		return (a != null) ? a : b;
+		return (a != null && !a.isEmpty()) ? a : b;
 	}
 
 	private static String[] coalesce(String[] a, String[] b) {
 		return (a != null && a.length != 0) ? a : b;
 	}
 
-	private void resolveSettings() {
+	public void print() {
+		System.out.printf("id %s%nname %s%ncost %d%ndescription %s%ntype %s%ncolor %s%nrarity %s%ntarget %s%nactions %s%nimage %s%n",
+				  id, name, cost, description, type, color, rarity, target, rawSettings.actions, image);
+	}
+
+	private void resolveSettings(CardLibrary library) {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
-		id = modIdPrefix + rawSettings.id;
+		id = library.getModPrefix() + rawSettings.id;
 		name = rawSettings.name;
 		cost = Integer.parseInt(rawSettings.cost);
 

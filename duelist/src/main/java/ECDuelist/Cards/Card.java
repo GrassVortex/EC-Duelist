@@ -2,13 +2,11 @@ package ECDuelist.Cards;
 
 import ECDuelist.Settings.CardLibrary;
 import basemod.abstracts.CustomCard;
-import com.google.gson.Gson;
+import basemod.helpers.BaseModCardTags;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+
 
 public class Card extends
 		  CustomCard {
@@ -20,6 +18,22 @@ public class Card extends
 		this.settings = settings;
 	}
 
+	public void postInit(){
+
+		baseDamage = 10;
+		this.tags.add(BaseModCardTags.BASIC_STRIKE);
+		this.tags.add(CardTags.STRIKE);
+
+
+
+		isCostModified = false;
+		isCostModifiedForTurn = false;
+		isDamageModified = false;
+		isBlockModified = false;
+		isMagicNumberModified = false;
+
+	}
+
 	public String getPrefixedId() {
 		return settings.id;
 	}
@@ -27,6 +41,7 @@ public class Card extends
 	public boolean isUnlocked() {
 		return true;
 	}
+
 
 	@Override
 	public void upgrade() {

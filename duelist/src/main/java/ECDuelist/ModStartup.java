@@ -16,6 +16,7 @@ public class ModStartup implements
 		System.out.println("Hello StS World!");
 
 		library = new CardLibrary();
+		library.loadAllCards();
 	}
 
 	@SuppressWarnings("unused")

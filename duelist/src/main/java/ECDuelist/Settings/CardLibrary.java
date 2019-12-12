@@ -13,21 +13,30 @@ import java.util.ArrayList;
 
 public class CardLibrary {
 
+	private LibrarySettings settings;
+
 	private ArrayList<Card> cards;
 
 	public CardLibrary() {
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cardLibrary.json");
 		Gson reader = new Gson();
-		LibrarySettings list = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
+		settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
+	}
 
+	public void loadAllCards(){
 		cards = new ArrayList<Card>();
-		for (int i = 0; i < list.cards.length; i++) {
-			cards.add(loadCard(list.cards[i]));
+		for (int i = 0; i < settings.cards.length; i++) {
+			cards.add(loadCard(settings.cards[i]));
 		}
 	}
 
+	public String getModPrefix() {
+		return settings.modPrefix;
+	}
+
 	private Card loadCard(String cardId) {
-		return CardFactory.createCard(cardId);
+		Card card = CardFactory.createCard(this, cardId);
+		return card;
 	}
 
 	public void registerCards() {
@@ -41,7 +50,7 @@ public class CardLibrary {
 		}
 	}
 
-	public class LibrarySettings {
+	private class LibrarySettings {
 		public String[] cards;
 		public String modPrefix;
 	}
