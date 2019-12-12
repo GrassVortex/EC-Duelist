@@ -1,5 +1,6 @@
 package ECDuelist.Cards;
 
+import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -20,10 +21,18 @@ public class CardSettings {
 	public AbstractCard.CardColor color;
 	public AbstractCard.CardRarity rarity;
 	public AbstractCard.CardTarget target;
+	public AbstractCard.CardTags tags;
 	public String image;
 
-	public CardSettings(String cardId){
-
+	public CardSettings(String cardId) {
+		try {
+			rawSettings = loadCardSettings(cardId);
+			resolveSettings();
+		} catch (NumberFormatException ex) {
+			throw new InitializationException("Invalid number for card '" + cardId + "'.", ex);
+		} catch (IllegalArgumentException ex) {
+			throw new InitializationException("Check type, flag, and other spellings for card '" + cardId + "'.", ex);
+		}
 	}
 
 
@@ -73,9 +82,19 @@ public class CardSettings {
 		return (a != null && a.length != 0) ? a : b;
 	}
 
-	private static Settings resolveSettings(RawCardSettings rawSettings) {
+	private void resolveSettings() {
+		id = rawSettings.id;
+		name = rawSettings.name;
+		cost = Integer.parseInt(rawSettings.cost);
 
+		// CardCrawlGame.languagePack
+		description = rawSettings.description;
 
+		type = AbstractCard.CardType.valueOf(rawSettings.type);
+		color = AbstractCard.CardColor.valueOf(rawSettings.color);
+		rarity = AbstractCard.CardRarity.valueOf(rawSettings.rarity);
+		target = AbstractCard.CardTarget.valueOf(rawSettings.target);
+		tags = AbstractCard.CardTags.valueOf(rawSettings.tags);
 	}
 
 	private class RawCardSettings {
@@ -89,6 +108,7 @@ public class CardSettings {
 		public String color;
 		public String rarity;
 		public String target;
+		public String tags;
 
 		public String[] actions;
 
@@ -105,6 +125,7 @@ public class CardSettings {
 			c.color = color;
 			c.rarity = rarity;
 			c.target = target;
+			c.tags = tags;
 			c.actions = actions.clone();
 			c.image = image;
 			return c;
