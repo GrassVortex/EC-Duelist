@@ -1,0 +1,14 @@
+{
+  "author_list": ["Will 'Overlord' Kunkel", "cassy1291", "GrassVortex", "Myla Minoki"],
+  "dependencies": ["basemod", "stslib"],
+  "optional_dependencies": [],
+  "credits": "Extra Credits Twitch-chat",
+
+  "modid": "${project.artifactId}",
+  "name": "${project.name}",
+  "description": "${project.description}",
+  "version": "${project.version}",
+  "sts_version": "${SlayTheSpire.version}",
+  "mts_version": "${ModTheSpire.version}"
+}
+
