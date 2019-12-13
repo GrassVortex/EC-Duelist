@@ -1,6 +1,7 @@
 package ECDuelist;
 
 import ECDuelist.Settings.CardLibrary;
+import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 
@@ -16,7 +17,8 @@ public class ModStartup implements
 		System.out.println("Hello StS World!");
 
 		library = new CardLibrary();
-		library.loadAllCards();
+
+		BaseMod.subscribe(this);
 	}
 
 	@SuppressWarnings("unused")
@@ -29,6 +31,9 @@ public class ModStartup implements
 
 	@Override
 	public void receiveEditCards() {
+
+		library.loadAllCards();
+
 		library.registerCards();
 
 	}

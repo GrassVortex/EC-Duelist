@@ -23,7 +23,7 @@ public class CardLibrary {
 		settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
 	}
 
-	public void loadAllCards(){
+	public void loadAllCards() {
 		cards = new ArrayList<Card>();
 		for (int i = 0; i < settings.cards.length; i++) {
 			cards.add(loadCard(settings.cards[i]));
@@ -43,6 +43,15 @@ public class CardLibrary {
 		for (int i = 0; i < cards.size(); i++) {
 			Card card = cards.get(i);
 			BaseMod.addCard(card);
+		}
+
+		setLockStatus();
+	}
+
+
+	private void setLockStatus() {
+		for (int i = 0; i < cards.size(); i++) {
+			Card card = cards.get(i);
 
 			if (card.isUnlocked()) {
 				UnlockTracker.unlockCard(card.getPrefixedId());

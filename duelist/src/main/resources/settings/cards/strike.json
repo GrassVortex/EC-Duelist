@@ -1,6 +1,6 @@
 {
-  "id": "strike",
-  "name": "strike",
+  "id": "modStrike",
+  "name": "modStrike",
   "cost": "4",
   "description": "test description",
   "type": "ATTACK",
