@@ -16,9 +16,6 @@ public class Card extends
 	public Card(CardSettings settings) {
 		super(settings.id, settings.name, settings.image, settings.cost, settings.description, settings.type, settings.color, settings.rarity, settings.target);
 		this.settings = settings;
-	}
-
-	public void postInit(){
 
 		baseDamage = 10;
 //		this.tags.add(BaseModCardTags.BASIC_STRIKE);

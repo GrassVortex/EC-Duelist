@@ -21,7 +21,7 @@ public class CardSettings {
 	public AbstractCard.CardColor color;
 	public AbstractCard.CardRarity rarity;
 	public AbstractCard.CardTarget target;
-	public AbstractCard.CardTags tags;
+	public AbstractCard.CardTags stsTags;
 	public String image;
 
 	public CardSettings(CardLibrary library, String cardId) {
@@ -71,6 +71,10 @@ public class CardSettings {
 		finalSettings.target = coalesce(current.target, base.target);
 		finalSettings.actions = coalesce(current.actions, base.actions);
 		finalSettings.image = coalesce(current.image, base.image);
+		finalSettings.background = coalesce(current.background, base.background);
+		finalSettings.orb = coalesce(current.orb, base.orb);
+		finalSettings.image = coalesce(current.image, base.image);
+
 		return finalSettings;
 	}
 
@@ -81,6 +85,11 @@ public class CardSettings {
 	private static String[] coalesce(String[] a, String[] b) {
 		return (a != null && a.length != 0) ? a : b;
 	}
+
+	private static RawCardSettings.CardTextures coalesce(RawCardSettings.CardTextures a, RawCardSettings.CardTextures b) {
+		return (a != null) ? a : b;
+	}
+
 
 	public void print() {
 		System.out.printf("id %s%nname %s%ncost %d%ndescription %s%ntype %s%ncolor %s%nrarity %s%ntarget %s%nactions %s%nimage %s%n",
@@ -117,7 +126,7 @@ public class CardSettings {
 		color = AbstractCard.CardColor.valueOf(rawSettings.color);
 		rarity = AbstractCard.CardRarity.valueOf(rawSettings.rarity);
 		target = AbstractCard.CardTarget.valueOf(rawSettings.target);
-		tags = AbstractCard.CardTags.valueOf(rawSettings.tags);
+		stsTags = AbstractCard.CardTags.valueOf(rawSettings.stsTags);
 
 		if (rawSettings.image != null && !rawSettings.image.isEmpty()) {
 			image = rawSettings.image;
@@ -139,9 +148,13 @@ public class CardSettings {
 		public String rarity;
 		public String target;
 		// TODO make list
-		public String tags;
+		public String stsTags;
 		public String[] actions;
 		public String image;
+		public CardTextures background;
+		public CardTextures orb;
+		public CardTextures banner;
+
 
 		public RawCardSettings clone() {
 			RawCardSettings c = new RawCardSettings();
@@ -154,10 +167,25 @@ public class CardSettings {
 			c.color = color;
 			c.rarity = rarity;
 			c.target = target;
-			c.tags = tags;
+			c.stsTags = stsTags;
 			c.actions = actions.clone();
 			c.image = image;
+			c.background = background.clone();
+			c.orb = orb.clone();
+			c.banner = banner.clone();
 			return c;
+		}
+
+		public static class CardTextures {
+			public String small;
+			public String large;
+
+			public CardTextures clone() {
+				CardTextures c = new CardTextures();
+				c.small = small;
+				c.large = large;
+				return c;
+			}
 		}
 	}
 

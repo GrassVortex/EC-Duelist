@@ -9,8 +9,6 @@ public class CardFactory {
 		CardSettings settings = new CardSettings(library, cardId);
 		settings.print();
 		Card card = new Card(settings);
-		card.postInit();
-
 		return card;
 	}
 }

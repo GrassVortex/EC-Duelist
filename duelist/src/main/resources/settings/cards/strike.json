@@ -1,4 +1,5 @@
 {
+  "bases" : ["attackBase"],
   "id": "modStrike",
   "name": "modStrike",
   "cost": "4",
@@ -7,8 +8,7 @@
   "color": "COLORLESS",
   "rarity": "COMMON",
   "target": "ENEMY",
-  "tags": "STRIKE",
+  "stsTags": "STRIKE",
   "image": "images/Attack.png",
   "actions": []
-
 }
