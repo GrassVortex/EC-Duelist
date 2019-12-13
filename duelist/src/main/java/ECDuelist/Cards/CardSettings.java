@@ -122,6 +122,7 @@ public class CardSettings {
 		if (rawSettings.image != null && !rawSettings.image.isEmpty()) {
 			image = rawSettings.image;
 		} else {
+			// Set default image path if none is specified
 			image = "images/" + rawSettings.id + ".png";
 		}
 	}

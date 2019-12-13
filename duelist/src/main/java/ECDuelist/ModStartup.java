@@ -32,7 +32,7 @@ public class ModStartup implements
 	@Override
 	public void receiveEditCards() {
 
-		library.loadAllCards();
+		library.createCards();
 
 		library.registerCards();
 

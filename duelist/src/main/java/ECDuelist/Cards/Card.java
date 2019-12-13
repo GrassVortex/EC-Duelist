@@ -21,16 +21,13 @@ public class Card extends
 	public void postInit(){
 
 		baseDamage = 10;
-		this.tags.add(BaseModCardTags.BASIC_STRIKE);
-		this.tags.add(CardTags.STRIKE);
-
-
-
-		isCostModified = false;
-		isCostModifiedForTurn = false;
-		isDamageModified = false;
-		isBlockModified = false;
-		isMagicNumberModified = false;
+//		this.tags.add(BaseModCardTags.BASIC_STRIKE);
+//		this.tags.add(CardTags.STRIKE);
+//		isCostModified = false;
+//		isCostModifiedForTurn = false;
+//		isDamageModified = false;
+//		isBlockModified = false;
+//		isMagicNumberModified = false;
 
 	}
 

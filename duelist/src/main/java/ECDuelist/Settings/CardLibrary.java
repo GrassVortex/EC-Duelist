@@ -23,10 +23,10 @@ public class CardLibrary {
 		settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
 	}
 
-	public void loadAllCards() {
+	public void createCards() {
 		cards = new ArrayList<Card>();
 		for (int i = 0; i < settings.cards.length; i++) {
-			cards.add(loadCard(settings.cards[i]));
+			cards.add(createCard(settings.cards[i]));
 		}
 	}
 
@@ -34,7 +34,7 @@ public class CardLibrary {
 		return settings.modPrefix;
 	}
 
-	private Card loadCard(String cardId) {
+	private Card createCard(String cardId) {
 		Card card = CardFactory.createCard(this, cardId);
 		return card;
 	}
