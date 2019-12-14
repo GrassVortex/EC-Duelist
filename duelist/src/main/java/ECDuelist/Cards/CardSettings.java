@@ -72,11 +72,12 @@ public class CardSettings {
 		finalSettings.color = coalesce(current.color, base.color);
 		finalSettings.rarity = coalesce(current.rarity, base.rarity);
 		finalSettings.target = coalesce(current.target, base.target);
+		finalSettings.stsTags = coalesce(current.stsTags, base.stsTags);
 		finalSettings.actions = coalesce(current.actions, base.actions);
 		finalSettings.image = coalesce(current.image, base.image);
 		finalSettings.background = coalesce(current.background, base.background);
 		finalSettings.orb = coalesce(current.orb, base.orb);
-		finalSettings.image = coalesce(current.image, base.image);
+		finalSettings.banner = coalesce(current.banner, base.banner);
 
 		return finalSettings;
 	}
@@ -161,6 +162,12 @@ public class CardSettings {
 		public CardTextures background;
 		public CardTextures orb;
 		public CardTextures banner;
+
+		public RawCardSettings() {
+			background = new CardTextures();
+			orb = new CardTextures();
+			banner = new CardTextures();
+		}
 
 
 		public RawCardSettings clone() {
