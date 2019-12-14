@@ -23,6 +23,9 @@ public class CardSettings {
 	public AbstractCard.CardTarget target;
 	public AbstractCard.CardTags stsTags;
 	public String image;
+	public CardTextures background;
+	public CardTextures orb;
+	public CardTextures banner;
 
 	public CardSettings(CardLibrary library, String cardId) {
 		try {
@@ -44,7 +47,7 @@ public class CardSettings {
 
 		if (rawSettings.bases != null) {
 			currentSettings = rawSettings.clone();
-			// we start at the last base setting and work our way forward, that way we make sure that the later values
+			// we start at the last (most base) base setting and work our way forward, that way we make sure that the later values
 			// are not overridden by earlier "more base" values.
 			for (int i = rawSettings.bases.length - 1; i >= 0; i--) {
 				RawCardSettings baseSettings = loadCardSettings(rawSettings.bases[i]);
@@ -86,10 +89,9 @@ public class CardSettings {
 		return (a != null && a.length != 0) ? a : b;
 	}
 
-	private static RawCardSettings.CardTextures coalesce(RawCardSettings.CardTextures a, RawCardSettings.CardTextures b) {
+	private static CardTextures coalesce(CardTextures a, CardTextures b) {
 		return (a != null) ? a : b;
 	}
-
 
 	public void print() {
 		System.out.printf("id %s%nname %s%ncost %d%ndescription %s%ntype %s%ncolor %s%nrarity %s%ntarget %s%nactions %s%nimage %s%n",
@@ -134,6 +136,10 @@ public class CardSettings {
 			// Set default image path if none is specified
 			image = "images/" + rawSettings.id + ".png";
 		}
+
+		background = rawSettings.background;
+		orb = rawSettings.orb;
+		banner = rawSettings.banner;
 	}
 
 	private static class RawCardSettings {
@@ -149,6 +155,7 @@ public class CardSettings {
 		public String target;
 		// TODO make list
 		public String stsTags;
+		// TODO Make custom type
 		public String[] actions;
 		public String image;
 		public CardTextures background;
@@ -175,17 +182,17 @@ public class CardSettings {
 			c.banner = banner.clone();
 			return c;
 		}
+	}
 
-		public static class CardTextures {
-			public String small;
-			public String large;
+	public static class CardTextures {
+		public String small;
+		public String large;
 
-			public CardTextures clone() {
-				CardTextures c = new CardTextures();
-				c.small = small;
-				c.large = large;
-				return c;
-			}
+		public CardTextures clone() {
+			CardTextures c = new CardTextures();
+			c.small = small;
+			c.large = large;
+			return c;
 		}
 	}
 
