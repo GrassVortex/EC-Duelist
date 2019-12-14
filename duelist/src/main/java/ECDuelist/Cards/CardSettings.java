@@ -105,9 +105,11 @@ public class CardSettings {
 
 	public static String format(String[] list, String separator) {
 		String result = "";
-		if (list.length > 0) {
-			result = list[0];
+		if (list == null || list.length == 0) {
+			return result;
 		}
+
+		result = list[0];
 		// Note that the loop starts at 1, not zero
 		for (int i = 1; i < list.length; i++) {
 			result += separator + list[i];
