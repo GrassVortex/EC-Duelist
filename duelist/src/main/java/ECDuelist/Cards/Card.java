@@ -7,13 +7,20 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 
-
 public class Card extends
 		  CustomCard {
 
 	private CardSettings settings;
 
-	public Card(CardSettings settings) {
+	public Card() {
+		super("settings.id", "settings.name", "images/Attack.png", 3, "settings.description", CardType.ATTACK, CardColor.COLORLESS, CardRarity.COMMON, CardTarget.ENEMY);
+	}
+
+	public Card(String cardId) {
+		this(CardFactory.loadSettings(cardId));
+	}
+
+	private Card(CardSettings settings) {
 		super(settings.id, settings.name, settings.image, settings.cost, settings.description, settings.type, settings.color, settings.rarity, settings.target);
 		this.settings = settings;
 
