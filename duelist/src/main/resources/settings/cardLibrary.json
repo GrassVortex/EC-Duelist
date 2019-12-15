@@ -1,4 +1,4 @@
 {
-  "cards": ["strike"],
+  "cards": ["StrikeCard"],
   "modPrefix": "ECDuelist:"
 }

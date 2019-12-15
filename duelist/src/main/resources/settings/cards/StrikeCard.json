@@ -1,6 +1,6 @@
 {
   "bases" : ["attackBase"],
-  "id": "Strike",
+  "id": "StrikeCard",
   "name": "modStrike",
   "cost": "4",
   "description": "test description",

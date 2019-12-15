@@ -12,11 +12,8 @@ public class Card extends
 
 	private CardSettings settings;
 
-	public Card() {
-		super("settings.id", "settings.name", "images/Attack.png", 3, "settings.description", CardType.ATTACK, CardColor.COLORLESS, CardRarity.COMMON, CardTarget.ENEMY);
-	}
 
-	public Card(String cardId) {
+	protected Card(String cardId) {
 		this(CardFactory.loadSettings(cardId));
 	}
 
@@ -37,6 +34,10 @@ public class Card extends
 
 	public String getPrefixedId() {
 		return settings.id;
+	}
+
+	public String getUnprefixedId() {
+		return settings.rawId;
 	}
 
 	public boolean isUnlocked() {

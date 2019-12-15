@@ -14,6 +14,7 @@ public class CardSettings {
 	private RawCardSettings rawSettings;
 
 	public String id;
+	public String rawId;
 	public String name;
 	public int cost;
 	public String description;
@@ -119,7 +120,8 @@ public class CardSettings {
 
 	private void resolveSettings(CardLibrary library) {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
-		id = library.getModPrefix() + rawSettings.id;
+		rawId = rawSettings.id;
+		id = library.getModPrefix() + rawId;
 		name = rawSettings.name;
 		cost = Integer.parseInt(rawSettings.cost);
 
