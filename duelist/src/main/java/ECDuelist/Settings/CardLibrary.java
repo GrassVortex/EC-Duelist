@@ -1,51 +1,77 @@
 package ECDuelist.Settings;
 
 import ECDuelist.Cards.Card;
-import ECDuelist.Cards.CardFactory;
+import ECDuelist.Cards.CardSettings;
+import ECDuelist.Cards.Strike;
 import basemod.BaseMod;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+import javafx.fxml.LoadException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CardLibrary {
 
-	private LibrarySettings settings;
+	private static HashMap<String, CardSettings> cardSettings;
 
+	private LibrarySettings settings;
 	private ArrayList<Card> cards;
 
 	public CardLibrary() {
+		if (cardSettings != null) {
+			throw new IllegalStateException("Can't create more than one " + CardLibrary.class.getName());
+		}
+
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cardLibrary.json");
 		Gson reader = new Gson();
 		settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), LibrarySettings.class);
+		cardSettings = new HashMap<String, CardSettings>();
 	}
 
 	public void createCards() {
 		cards = new ArrayList<Card>();
-		for (int i = 0; i < settings.cards.length; i++) {
-			cards.add(createCard(settings.cards[i]));
-		}
+
+		createCard(Strike.class);
+
+		registerCards();
+		setLockStatus();
+	}
+
+	public static CardSettings getSettings(String cardId) {
+		return cardSettings.get(cardId);
 	}
 
 	public String getModPrefix() {
 		return settings.modPrefix;
 	}
 
-	private Card createCard(String cardId) {
-		Card card = CardFactory.createCard(this, cardId);
-		return card;
+	private void createCard(Class cardClass) {
+		String cardId = cardClass.getSimpleName();
+		System.out.println("createCard cardId " + cardId);
+		// Create and save the card setting so that the card instance can load it ba name later
+		cardSettings.put(cardId, new CardSettings(this, cardId));
+		Card card = instantiateCard(cardClass);
+		cards.add(card);
 	}
 
-	public void registerCards() {
+	private Card instantiateCard(Class cardClass) {
+		try {
+			Card card = (Card) cardClass.newInstance();
+			return card;
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void registerCards() {
 		for (int i = 0; i < cards.size(); i++) {
 			Card card = cards.get(i);
 			BaseMod.addCard(card);
 		}
-
-		setLockStatus();
 	}
 
 

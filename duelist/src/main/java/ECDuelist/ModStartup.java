@@ -34,7 +34,5 @@ public class ModStartup implements
 
 		library.createCards();
 
-		library.registerCards();
-
 	}
 }

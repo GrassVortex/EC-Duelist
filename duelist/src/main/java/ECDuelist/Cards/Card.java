@@ -14,7 +14,7 @@ public class Card extends
 
 
 	protected Card(String cardId) {
-		this(CardFactory.loadSettings(cardId));
+		this(CardLibrary.getSettings(cardId));
 	}
 
 	private Card(CardSettings settings) {
