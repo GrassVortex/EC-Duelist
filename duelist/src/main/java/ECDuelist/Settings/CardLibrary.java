@@ -2,12 +2,11 @@ package ECDuelist.Settings;
 
 import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
-import ECDuelist.Cards.Defend;
-import ECDuelist.Cards.Strike;
+import ECDuelist.Cards.BasicDefend;
+import ECDuelist.Cards.BasicStrike;
 import basemod.BaseMod;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import javafx.fxml.LoadException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,8 +35,8 @@ public class CardLibrary {
 	public void createCards() {
 		cards = new ArrayList<Card>();
 
-		//createCard(Strike.class);
-		createCard(Defend.class);
+		createCard(BasicStrike.class);
+		createCard(BasicDefend.class);
 
 		registerCards();
 		setLockStatus();
