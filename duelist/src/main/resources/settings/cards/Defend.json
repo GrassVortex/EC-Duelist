@@ -1,0 +1,14 @@
+{
+  "bases" : ["attackBase"],
+  "id": "Defend",
+  "name": "modStrike",
+  "cost": "8",
+  "description": "test description",
+  "type": "ATTACK",
+  "color": "COLORLESS",
+  "rarity": "COMMON",
+  "target": "ENEMY",
+  "stsTags": "STRIKE",
+  "image": "images/Attack.png",
+  "actions": []
+}

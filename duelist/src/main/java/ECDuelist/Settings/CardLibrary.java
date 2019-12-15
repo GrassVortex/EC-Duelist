@@ -2,6 +2,7 @@ package ECDuelist.Settings;
 
 import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
+import ECDuelist.Cards.Defend;
 import ECDuelist.Cards.Strike;
 import basemod.BaseMod;
 import com.google.gson.Gson;
@@ -35,7 +36,8 @@ public class CardLibrary {
 	public void createCards() {
 		cards = new ArrayList<Card>();
 
-		createCard(Strike.class);
+		//createCard(Strike.class);
+		createCard(Defend.class);
 
 		registerCards();
 		setLockStatus();
@@ -52,7 +54,7 @@ public class CardLibrary {
 	private void createCard(Class cardClass) {
 		String cardId = cardClass.getSimpleName();
 		System.out.println("createCard cardId " + cardId);
-		// Create and save the card setting so that the card instance can load it ba name later
+		// Create and save the card setting so that the card instance can load it by name later
 		cardSettings.put(cardId, new CardSettings(this, cardId));
 		Card card = instantiateCard(cardClass);
 		cards.add(card);

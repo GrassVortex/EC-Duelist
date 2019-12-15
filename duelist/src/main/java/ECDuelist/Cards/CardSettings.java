@@ -41,7 +41,9 @@ public class CardSettings {
 
 
 	private static RawCardSettings loadCardSettings(String cardId) {
-		InputStream in = CardLibrary.class.getResourceAsStream("/settings/cards/" + cardId + ".json");
+		String settingsFileName = "/settings/cards/" + cardId + ".json";
+		System.out.println("settingsFileName " + settingsFileName);
+		InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName);
 		Gson reader = new Gson();
 		RawCardSettings rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), RawCardSettings.class);
 		RawCardSettings currentSettings;
