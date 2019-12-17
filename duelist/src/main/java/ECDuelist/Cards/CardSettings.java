@@ -4,6 +4,8 @@ import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.CardStrings;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,12 +14,11 @@ import java.nio.charset.StandardCharsets;
 public class CardSettings {
 
 	private RawCardSettings rawSettings;
+	private CardStrings localizedStrings;
 
 	public String id;
 	public String rawId;
-	public String name;
 	public int cost;
-	public String description;
 	public AbstractCard.CardType type;
 	public AbstractCard.CardColor color;
 	public AbstractCard.CardRarity rarity;
@@ -28,10 +29,15 @@ public class CardSettings {
 	public CardTextures orb;
 	public CardTextures banner;
 
-	public CardSettings(CardLibrary library, String cardId) {
+	public String name;
+	public String description;
+
+	public CardSettings(String cardPrefix, String cardId) {
 		try {
-			rawSettings = loadCardSettings(cardId);
-			resolveSettings(library);
+			rawSettings = loadRawSettings(cardId);
+			resolveSettings(cardPrefix);
+			localizedStrings = CardCrawlGame.languagePack.getCardStrings(id);
+			readLocalizedStrings();
 		} catch (NumberFormatException ex) {
 			throw new InitializationException("Invalid number for card '" + cardId + "'.", ex);
 		} catch (IllegalArgumentException ex) {
@@ -39,8 +45,7 @@ public class CardSettings {
 		}
 	}
 
-
-	private static RawCardSettings loadCardSettings(String cardId) {
+	private static RawCardSettings loadRawSettings(String cardId) {
 		String settingsFileName = "/settings/cards/" + cardId + ".json";
 		System.out.println("settingsFileName " + settingsFileName);
 		InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName);
@@ -53,7 +58,7 @@ public class CardSettings {
 			// we start at the last (most base) base setting and work our way forward, that way we make sure that the later values
 			// are not overridden by earlier "more base" values.
 			for (int i = rawSettings.bases.length - 1; i >= 0; i--) {
-				RawCardSettings baseSettings = loadCardSettings(rawSettings.bases[i]);
+				RawCardSettings baseSettings = loadRawSettings(rawSettings.bases[i]);
 				currentSettings = mergeSettings(currentSettings, baseSettings);
 			}
 		} else {
@@ -67,10 +72,8 @@ public class CardSettings {
 		RawCardSettings finalSettings = new RawCardSettings();
 		// The id and name should ALWAYS be from the current setting, not the base/parent
 		finalSettings.id = current.id;
-		finalSettings.name = current.name;
 
 		finalSettings.cost = coalesce(current.cost, base.cost);
-		finalSettings.description = coalesce(current.description, base.description);
 		finalSettings.type = coalesce(current.type, base.type);
 		finalSettings.color = coalesce(current.color, base.color);
 		finalSettings.rarity = coalesce(current.rarity, base.rarity);
@@ -97,11 +100,6 @@ public class CardSettings {
 		return (a != null) ? a : b;
 	}
 
-	public void print() {
-		System.out.printf("id %s%nname %s%ncost %d%ndescription %s%ntype %s%ncolor %s%nrarity %s%ntarget %s%nactions %s%nimage %s%n",
-				  id, name, cost, description, type, color, rarity, target, format(rawSettings.actions), image);
-	}
-
 	public static String format(String[] list) {
 		return format(list, ", ");
 	}
@@ -120,16 +118,12 @@ public class CardSettings {
 		return result;
 	}
 
-	private void resolveSettings(CardLibrary library) {
+	private void resolveSettings(String cardPrefix) {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
 		rawId = rawSettings.id;
-		id = library.getModPrefix() + rawId;
-		name = rawSettings.name;
-		cost = Integer.parseInt(rawSettings.cost);
 
-		// TODO Translate description
-		// CardCrawlGame.languagePack
-		description = rawSettings.description;
+		id = String.join("_", cardPrefix, rawId);
+		cost = Integer.parseInt(rawSettings.cost);
 
 		type = AbstractCard.CardType.valueOf(rawSettings.type);
 		color = AbstractCard.CardColor.valueOf(rawSettings.color);
@@ -149,13 +143,16 @@ public class CardSettings {
 		banner = rawSettings.banner;
 	}
 
+	private void readLocalizedStrings() {
+		name = localizedStrings.NAME;
+		description = localizedStrings.DESCRIPTION;
+	}
+
 	private static class RawCardSettings {
 		public String[] bases;
 
 		public String id;
-		public String name;
 		public String cost;
-		public String description;
 		public String type;
 		public String color;
 		public String rarity;
@@ -180,9 +177,7 @@ public class CardSettings {
 			RawCardSettings c = new RawCardSettings();
 			c.bases = bases.clone();
 			c.id = id;
-			c.name = name;
 			c.cost = cost;
-			c.description = description;
 			c.type = type;
 			c.color = color;
 			c.rarity = rarity;

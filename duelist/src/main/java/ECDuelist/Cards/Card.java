@@ -2,14 +2,12 @@ package ECDuelist.Cards;
 
 import ECDuelist.Settings.CardLibrary;
 import basemod.abstracts.CustomCard;
-import basemod.helpers.BaseModCardTags;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 
 public class Card extends
 		  CustomCard {
-
 	private CardSettings settings;
 
 
