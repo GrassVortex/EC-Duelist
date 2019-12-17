@@ -56,7 +56,7 @@ public class CardSettings {
 		return rawSettings;
 	}
 
-	public static void initializeStatics(){
+	public static void initializeStatics() {
 		actionLibrary = new ActionLibrary();
 		actionLibrary.registerActions();
 	}
@@ -144,11 +144,15 @@ public class CardSettings {
 		orb = rawSettings.orb;
 		banner = rawSettings.banner;
 
-		actions = new ActionBase[rawSettings.actions.length];
-		for (int i = 0; i < rawSettings.actions.length; i++) {
-			JsonObject json = rawSettings.actions[i].getAsJsonObject();
+		if (rawSettings.actions != null) {
+			actions = new ActionBase[rawSettings.actions.length];
+			for (int i = 0; i < rawSettings.actions.length; i++) {
+				JsonObject json = rawSettings.actions[i].getAsJsonObject();
 
-			actions[i] = actionLibrary.parseAction(json);
+				actions[i] = actionLibrary.parseAction(json);
+			}
+		} else {
+			actions =  new ActionBase[0];
 		}
 	}
 

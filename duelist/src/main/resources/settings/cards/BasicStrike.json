@@ -17,7 +17,7 @@
       "damage": 5
     },
     {
-      "type": "Defend",
+      "type": "Block",
       "block": 15
     }
   ]
