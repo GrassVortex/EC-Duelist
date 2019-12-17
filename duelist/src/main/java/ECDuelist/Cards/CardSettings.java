@@ -100,29 +100,11 @@ public class CardSettings {
 		return (a != null) ? a : b;
 	}
 
-	public static String format(String[] list) {
-		return format(list, ", ");
-	}
-
-	public static String format(String[] list, String separator) {
-		String result = "";
-		if (list == null || list.length == 0) {
-			return result;
-		}
-
-		result = list[0];
-		// Note that the loop starts at 1, not zero
-		for (int i = 1; i < list.length; i++) {
-			result += separator + list[i];
-		}
-		return result;
-	}
-
 	private void resolveSettings(String cardPrefix) {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
 		rawId = rawSettings.id;
 
-		id = String.join("_", cardPrefix, rawId);
+		id = String.join(":", cardPrefix, rawId);
 		cost = Integer.parseInt(rawSettings.cost);
 
 		type = AbstractCard.CardType.valueOf(rawSettings.type);

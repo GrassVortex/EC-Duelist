@@ -1,6 +1,7 @@
 package ECDuelist;
 
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Text;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
@@ -23,6 +24,7 @@ public class ModStartup implements
 
 	public ModStartup() {
 
+
 		InputStream in = CardLibrary.class.getResourceAsStream("/settings/modBaseSettings.json");
 		Gson reader = new Gson();
 		settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), ModSettings.class);
@@ -35,6 +37,7 @@ public class ModStartup implements
 	@SuppressWarnings("unused")
 	// This class is indirectly used by ModTheSpire. But the tools can't verify it, therefore the warning
 	public static void initialize() {
+		Text.println(new Object(){}.getClass().getEnclosingMethod().getName());
 		// Create an instance of out main mod class. Do all initialization in the constructor and related methods, not in this method.
 		ModStartup start = new ModStartup();
 	}
@@ -42,13 +45,14 @@ public class ModStartup implements
 
 	@Override
 	public void receiveEditCards() {
-
+		Text.println(new Object(){}.getClass().getEnclosingMethod().getName());
 		library.createCards();
 
 	}
 
 	@Override
 	public void receiveEditStrings() {
+		Text.println(new Object(){}.getClass().getEnclosingMethod().getName());
 
 		String localizationBase = String.join("/", "localization", settings.language, settings.modPrefix);
 
