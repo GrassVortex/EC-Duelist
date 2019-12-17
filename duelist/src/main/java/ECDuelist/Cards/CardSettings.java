@@ -1,8 +1,12 @@
 package ECDuelist.Cards;
 
+import ECDuelist.Cards.Actions.ActionLibrary;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -13,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 
 public class CardSettings {
 
+	private static ActionLibrary actionLibrary;
 	private RawCardSettings rawSettings;
 	private CardStrings localizedStrings;
 
@@ -32,10 +37,12 @@ public class CardSettings {
 	public String name;
 	public String description;
 
+	public ActionBase[] actions;
+
 	public CardSettings(String cardPrefix, String cardId) {
 		try {
 			rawSettings = loadRawSettings(cardId);
-			resolveSettings(cardPrefix);
+			parseSettings(cardPrefix);
 			localizedStrings = CardCrawlGame.languagePack.getCardStrings(id);
 			readLocalizedStrings();
 		} catch (NumberFormatException ex) {
@@ -45,9 +52,17 @@ public class CardSettings {
 		}
 	}
 
+	public RawCardSettings getRawSettings() {
+		return rawSettings;
+	}
+
+	public static void initializeStatics(){
+		actionLibrary = new ActionLibrary();
+		actionLibrary.registerActions();
+	}
+
 	private static RawCardSettings loadRawSettings(String cardId) {
 		String settingsFileName = "/settings/cards/" + cardId + ".json";
-		System.out.println("settingsFileName " + settingsFileName);
 		InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName);
 		Gson reader = new Gson();
 		RawCardSettings rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), RawCardSettings.class);
@@ -96,11 +111,16 @@ public class CardSettings {
 		return (a != null && a.length != 0) ? a : b;
 	}
 
+	private static JsonElement[] coalesce(JsonElement[] a, JsonElement[] b) {
+		return (a != null && a.length != 0) ? a : b;
+	}
+
+
 	private static CardTextures coalesce(CardTextures a, CardTextures b) {
 		return (a != null) ? a : b;
 	}
 
-	private void resolveSettings(String cardPrefix) {
+	private void parseSettings(String cardPrefix) {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
 		rawId = rawSettings.id;
 
@@ -123,6 +143,13 @@ public class CardSettings {
 		background = rawSettings.background;
 		orb = rawSettings.orb;
 		banner = rawSettings.banner;
+
+		actions = new ActionBase[rawSettings.actions.length];
+		for (int i = 0; i < rawSettings.actions.length; i++) {
+			JsonObject json = rawSettings.actions[i].getAsJsonObject();
+
+			actions[i] = actionLibrary.parseAction(json);
+		}
 	}
 
 	private void readLocalizedStrings() {
@@ -130,7 +157,7 @@ public class CardSettings {
 		description = localizedStrings.DESCRIPTION;
 	}
 
-	private static class RawCardSettings {
+	public static class RawCardSettings {
 		public String[] bases;
 
 		public String id;
@@ -141,12 +168,13 @@ public class CardSettings {
 		public String target;
 		// TODO make list
 		public String stsTags;
-		// TODO Make custom type
-		public String[] actions;
+
 		public String image;
 		public CardTextures background;
 		public CardTextures orb;
 		public CardTextures banner;
+
+		public JsonElement[] actions;
 
 		public RawCardSettings() {
 			background = new CardTextures();
@@ -184,6 +212,10 @@ public class CardSettings {
 			c.large = large;
 			return c;
 		}
+	}
+
+	public static class ActionBase {
+		public String type;
 	}
 
 }

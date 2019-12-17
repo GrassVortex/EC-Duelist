@@ -23,6 +23,7 @@ public class CardLibrary {
 
 		this.cardPrefix = cardPrefix;
 		cardSettings = new HashMap<String, CardSettings>();
+		CardSettings.initializeStatics();
 	}
 
 	public void createCards() {

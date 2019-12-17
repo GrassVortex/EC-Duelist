@@ -1,6 +1,7 @@
 package ECDuelist.Cards;
 
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Text;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -18,6 +19,7 @@ public class Card extends
 	private Card(CardSettings settings) {
 		super(settings.id, settings.name, settings.image, settings.cost, settings.description, settings.type, settings.color, settings.rarity, settings.target);
 		this.settings = settings;
+
 
 		baseDamage = 10;
 //		this.tags.add(BaseModCardTags.BASIC_STRIKE);
