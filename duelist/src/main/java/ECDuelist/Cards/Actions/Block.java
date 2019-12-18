@@ -4,7 +4,9 @@ import ECDuelist.Cards.CardSettings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class Block {
+public class Block extends
+		  ActionBase {
+
 	public static void registerTo(ActionLibrary actionLibrary) {
 		actionLibrary.register(Block.class.getSimpleName(), new Loader());
 	}
