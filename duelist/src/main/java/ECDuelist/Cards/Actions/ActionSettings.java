@@ -10,7 +10,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public abstract class ActionSettings {
-	public String type;
+	public final String typeName;
+
+	protected ActionSettings(String name) {
+		this.typeName = name;
+	}
 
 	protected static <T extends IRawSettings> T loadRawSettings(JsonObject json, IMerger<T> merger, Class<T> type) {
 		T rawSettings;
@@ -38,7 +42,7 @@ public abstract class ActionSettings {
 		if (bases != null) {
 			// This cast should not be able to fail, but the compiler can't verify that
 			@SuppressWarnings("unchecked")
-			T temp = (T)rawSettings.clone();
+			T temp = (T) rawSettings.clone();
 			currentSettings = temp;
 			// we start at the last (most base) base setting and work our way forward, that way we make sure that the later values
 			// are not overridden by earlier "more base" values.

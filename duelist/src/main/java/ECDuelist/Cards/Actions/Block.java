@@ -7,8 +7,24 @@ import com.google.gson.JsonObject;
 public class Block extends
 		  ActionBase {
 
+	private Settings settings;
+
+	private Block(Settings settings) {
+		this.settings = settings;
+	}
+
 	public static void registerTo(ActionLibrary actionLibrary) {
-		actionLibrary.register(Block.class.getSimpleName(), new Loader());
+		actionLibrary.register(Block.class.getSimpleName(), new Loader(), new Factory());
+	}
+
+
+	private static class Factory implements
+			  ActionLibrary.IActionFactory {
+		@Override
+		public ActionBase createAction(ActionSettings settings) {
+			Settings mySettings = (Settings) settings;
+			return new Block(mySettings);
+		}
 	}
 
 	private static class Loader implements
@@ -30,6 +46,10 @@ public class Block extends
 		public int block;
 
 		private RawSettings rawSettings;
+
+		public Settings() {
+			super(Block.class.getSimpleName());
+		}
 
 		public static class RawSettings {
 			public String block;
