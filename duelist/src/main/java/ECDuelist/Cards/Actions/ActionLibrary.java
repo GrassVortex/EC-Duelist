@@ -1,6 +1,7 @@
 package ECDuelist.Cards.Actions;
 
 import ECDuelist.Cards.CardSettings;
+import ECDuelist.Settings.CardLibrary;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -9,9 +10,14 @@ import java.util.HashMap;
 public class ActionLibrary {
 
 	private HashMap<String, ISettingsLoader> loaders;
-	private HashMap<String, IActionFactory> factories;
+	// Needs to be static so that the default constructor from Card sub-classes can access these factories.
+	private static HashMap<String, IActionFactory> factories;
 
 	public ActionLibrary() {
+		if (factories != null) {
+			throw new IllegalStateException("Can't create more than one " + ActionLibrary.class.getName());
+		}
+
 		loaders = new HashMap<String, ISettingsLoader>();
 		factories = new HashMap<String, IActionFactory>();
 	}
@@ -21,7 +27,7 @@ public class ActionLibrary {
 		Block.registerTo(this);
 	}
 
-	public ActionBase createAction(ActionSettings settings) {
+	public static ActionBase createAction(ActionSettings settings) {
 		// This method assumes that all types are already registered
 		IActionFactory factory = factories.get(settings.typeName);
 		return factory.createAction(settings);

@@ -1,5 +1,6 @@
 package ECDuelist.Cards.Actions;
 
+import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
 import ECDuelist.Utils.SettingsHelper;
 import ECDuelist.Utils.Text;
@@ -17,6 +18,11 @@ public class Damage extends
 
 	public static void registerTo(ActionLibrary actionLibrary) {
 		actionLibrary.register(Damage.class.getSimpleName(), new Loader(), new Factory());
+	}
+
+	@Override
+	public void initialize(Card card) {
+
 	}
 
 

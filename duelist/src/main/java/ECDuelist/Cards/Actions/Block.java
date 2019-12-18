@@ -1,5 +1,6 @@
 package ECDuelist.Cards.Actions;
 
+import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,6 +18,10 @@ public class Block extends
 		actionLibrary.register(Block.class.getSimpleName(), new Loader(), new Factory());
 	}
 
+	@Override
+	public void initialize(Card card) {
+
+	}
 
 	private static class Factory implements
 			  ActionLibrary.IActionFactory {

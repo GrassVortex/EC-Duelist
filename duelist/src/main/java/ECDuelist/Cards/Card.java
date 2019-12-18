@@ -1,5 +1,7 @@
 package ECDuelist.Cards;
 
+import ECDuelist.Cards.Actions.ActionBase;
+import ECDuelist.Cards.Actions.ActionLibrary;
 import ECDuelist.Cards.Actions.ActionSettings;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.Text;
@@ -11,7 +13,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 public class Card extends
 		  CustomCard {
 	private CardSettings settings;
-
+	private ActionBase[] actions;
 
 	protected Card(String cardId) {
 		this(CardLibrary.getSettings(cardId));
@@ -21,9 +23,12 @@ public class Card extends
 		super(settings.id, settings.name, settings.image, settings.cost, settings.description, settings.type, settings.color, settings.rarity, settings.target);
 		this.settings = settings;
 
-		for (int i = 0; i < settings.actions.length; i++) {
+		actions = new ActionBase[settings.actions.length];
+		for (int i = 0; i < actions.length; i++) {
 			ActionSettings actionSetting = settings.actions[i];
-
+			ActionBase action = ActionLibrary.createAction(actionSetting);
+			action.initialize(this);
+			actions[i] = action;
 		}
 
 //		this.tags.add(BaseModCardTags.BASIC_STRIKE);
