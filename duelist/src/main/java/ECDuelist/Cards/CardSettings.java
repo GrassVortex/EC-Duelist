@@ -2,9 +2,11 @@ package ECDuelist.Cards;
 
 import ECDuelist.Cards.Actions.ActionLibrary;
 import ECDuelist.Cards.Actions.ActionSettings;
+import ECDuelist.Cards.Actions.Block;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.SettingsHelper;
+import basemod.helpers.BaseModCardTags;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -30,7 +32,8 @@ public class CardSettings {
 	public AbstractCard.CardColor color;
 	public AbstractCard.CardRarity rarity;
 	public AbstractCard.CardTarget target;
-	public AbstractCard.CardTags stsTags;
+	public AbstractCard.CardTags[] stsTags;
+	public AbstractCard.CardTags[] modTags;
 	public String image;
 	public CardTextures background;
 	public CardTextures orb;
@@ -100,6 +103,7 @@ public class CardSettings {
 		finalSettings.rarity = SettingsHelper.coalesce(current.rarity, base.rarity);
 		finalSettings.target = SettingsHelper.coalesce(current.target, base.target);
 		finalSettings.stsTags = SettingsHelper.coalesce(current.stsTags, base.stsTags);
+		finalSettings.modTags = SettingsHelper.coalesce(current.modTags, base.modTags);
 		finalSettings.actions = SettingsHelper.coalesce(current.actions, base.actions);
 		finalSettings.image = SettingsHelper.coalesce(current.image, base.image);
 		finalSettings.background = SettingsHelper.coalesce(current.background, base.background);
@@ -120,7 +124,27 @@ public class CardSettings {
 		color = AbstractCard.CardColor.valueOf(rawSettings.color);
 		rarity = AbstractCard.CardRarity.valueOf(rawSettings.rarity);
 		target = AbstractCard.CardTarget.valueOf(rawSettings.target);
-		stsTags = AbstractCard.CardTags.valueOf(rawSettings.stsTags);
+		stsTags = new AbstractCard.CardTags[rawSettings.stsTags.length];
+		for (int i = 0; i < stsTags.length; i++) {
+			stsTags[i] = AbstractCard.CardTags.valueOf(rawSettings.stsTags[i]);
+		}
+		modTags = new AbstractCard.CardTags[rawSettings.modTags.length];
+		for (int i = 0; i < modTags.length; i++) {
+			String tag = rawSettings.modTags[i];
+			switch (tag) {
+				case "BasicStrike":
+					modTags[i] = BaseModCardTags.BASIC_STRIKE;
+					break;
+				case "BasicDefend":
+					modTags[i] = BaseModCardTags.BASIC_DEFEND;
+					break;
+				case "Form":
+					modTags[i] = BaseModCardTags.FORM;
+					break;
+				default:
+					throw new RuntimeException("Invalid tag name for card '" + rawId + "'");
+			}
+		}
 
 		if (rawSettings.image != null && !rawSettings.image.isEmpty()) {
 			image = rawSettings.image;
@@ -159,8 +183,8 @@ public class CardSettings {
 		public String color;
 		public String rarity;
 		public String target;
-		// TODO make list
-		public String stsTags;
+		public String[] stsTags;
+		public String[] modTags;
 
 		public String image;
 		public CardTextures background;
@@ -185,7 +209,8 @@ public class CardSettings {
 			c.color = color;
 			c.rarity = rarity;
 			c.target = target;
-			c.stsTags = stsTags;
+			c.stsTags = stsTags.clone();
+			c.modTags = modTags.clone();
 			c.actions = actions.clone();
 			c.image = image;
 			c.background = background.clone();
@@ -206,8 +231,6 @@ public class CardSettings {
 			return c;
 		}
 	}
-
-
 
 
 }

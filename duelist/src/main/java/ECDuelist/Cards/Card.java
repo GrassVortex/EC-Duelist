@@ -9,6 +9,9 @@ import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 
 public class Card extends
 		  CustomCard {
@@ -31,8 +34,8 @@ public class Card extends
 			actions[i] = action;
 		}
 
-//		this.tags.add(BaseModCardTags.BASIC_STRIKE);
-//		this.tags.add(CardTags.STRIKE);
+		Collections.addAll(tags, settings.stsTags);
+		Collections.addAll(tags, settings.modTags);
 	}
 
 	public String getPrefixedId() {

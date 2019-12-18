@@ -1,5 +1,7 @@
 {
-  "bases" : ["attackBase"],
+  "bases": [
+    "attackBase"
+  ],
   "id": "Defend",
   "name": "Defend",
   "cost": "1",
@@ -7,7 +9,9 @@
   "type": "ATTACK",
   "rarity": "COMMON",
   "target": "ENEMY",
-  "stsTags": "STRIKE",
+  "stsTags": [
+    "STRIKE"
+  ],
   "image": "images/Attack.png",
   "actions": []
 }

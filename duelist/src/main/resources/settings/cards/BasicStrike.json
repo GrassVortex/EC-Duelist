@@ -8,7 +8,12 @@
   "type": "ATTACK",
   "rarity": "COMMON",
   "target": "ENEMY",
-  "stsTags": "STRIKE",
+  "stsTags": [
+    "STRIKE"
+  ],
+  "modTags": [
+    "BasicStrike"
+  ],
   "image": "images/Attack.png",
   "actions": [
     {
