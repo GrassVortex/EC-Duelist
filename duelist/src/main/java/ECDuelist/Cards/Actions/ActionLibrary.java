@@ -23,7 +23,7 @@ public class ActionLibrary {
 		loaders.put(typeName, loader);
 	}
 
-	public CardSettings.ActionBase parseAction(JsonObject json) {
+	public CardSettings.ActionSettingBase parseAction(JsonObject json) {
 		JsonPrimitive typeMember = json.getAsJsonPrimitive("type");
 		String actionType = typeMember.getAsString();
 
@@ -32,6 +32,6 @@ public class ActionLibrary {
 	}
 
 	public interface ISettingsLoader {
-		CardSettings.ActionBase parseAction(JsonObject json);
+		CardSettings.ActionSettingBase parseAction(JsonObject json);
 	}
 }

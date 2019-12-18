@@ -5,7 +5,6 @@
   "id": "Strike",
   "name": "Strike",
   "cost": "1",
-  "description": "test description",
   "type": "ATTACK",
   "rarity": "COMMON",
   "target": "ENEMY",

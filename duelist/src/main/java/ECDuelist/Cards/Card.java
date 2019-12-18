@@ -20,24 +20,17 @@ public class Card extends
 		super(settings.id, settings.name, settings.image, settings.cost, settings.description, settings.type, settings.color, settings.rarity, settings.target);
 		this.settings = settings;
 
+		for (int i = 0; i < settings.actions.length; i++) {
+			CardSettings.ActionSettingBase actionSetting = settings.actions[i];
 
-		baseDamage = 10;
+		}
+
 //		this.tags.add(BaseModCardTags.BASIC_STRIKE);
 //		this.tags.add(CardTags.STRIKE);
-//		isCostModified = false;
-//		isCostModifiedForTurn = false;
-//		isDamageModified = false;
-//		isBlockModified = false;
-//		isMagicNumberModified = false;
-
 	}
 
 	public String getPrefixedId() {
 		return settings.id;
-	}
-
-	public String getUnprefixedId() {
-		return settings.rawId;
 	}
 
 	public boolean isUnlocked() {

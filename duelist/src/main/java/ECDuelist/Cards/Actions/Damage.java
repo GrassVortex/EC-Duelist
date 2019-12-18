@@ -3,6 +3,7 @@ package ECDuelist.Cards.Actions;
 import ECDuelist.Cards.CardSettings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 
 public class Damage {
 	public static void registerTo(ActionLibrary actionLibrary) {
@@ -14,7 +15,7 @@ public class Damage {
 			  ActionLibrary.ISettingsLoader {
 
 		@Override
-		public CardSettings.ActionBase parseAction(JsonObject json) {
+		public CardSettings.ActionSettingBase parseAction(JsonObject json) {
 			Gson reader = new Gson();
 			Settings.RawSettings rawSettings = reader.fromJson(json, Settings.RawSettings.class);
 
@@ -25,14 +26,15 @@ public class Damage {
 		}
 	}
 
-	public static class Settings extends CardSettings.ActionBase {
+	public static class Settings extends CardSettings.ActionSettingBase {
 		public int damage;
-
+		public DamageInfo.DamageType damageType;
 
 		private RawSettings rawSettings;
 
 		public static class RawSettings {
 			public String damage;
+			public String damageType;
 		}
 	}
 }

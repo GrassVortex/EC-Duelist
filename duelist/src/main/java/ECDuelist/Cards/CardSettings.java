@@ -3,14 +3,15 @@ package ECDuelist.Cards;
 import ECDuelist.Cards.Actions.ActionLibrary;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.SettingsHelper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -37,7 +38,7 @@ public class CardSettings {
 	public String name;
 	public String description;
 
-	public ActionBase[] actions;
+	public ActionSettingBase[] actions;
 
 	public CardSettings(String cardPrefix, String cardId) {
 		try {
@@ -63,9 +64,13 @@ public class CardSettings {
 
 	private static RawCardSettings loadRawSettings(String cardId) {
 		String settingsFileName = "/settings/cards/" + cardId + ".json";
-		InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName);
-		Gson reader = new Gson();
-		RawCardSettings rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), RawCardSettings.class);
+		RawCardSettings rawSettings;
+		try (InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName)) {
+			Gson reader = new Gson();
+			rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), RawCardSettings.class);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		RawCardSettings currentSettings;
 
 		if (rawSettings.bases != null) {
@@ -88,36 +93,19 @@ public class CardSettings {
 		// The id and name should ALWAYS be from the current setting, not the base/parent
 		finalSettings.id = current.id;
 
-		finalSettings.cost = coalesce(current.cost, base.cost);
-		finalSettings.type = coalesce(current.type, base.type);
-		finalSettings.color = coalesce(current.color, base.color);
-		finalSettings.rarity = coalesce(current.rarity, base.rarity);
-		finalSettings.target = coalesce(current.target, base.target);
-		finalSettings.stsTags = coalesce(current.stsTags, base.stsTags);
-		finalSettings.actions = coalesce(current.actions, base.actions);
-		finalSettings.image = coalesce(current.image, base.image);
-		finalSettings.background = coalesce(current.background, base.background);
-		finalSettings.orb = coalesce(current.orb, base.orb);
-		finalSettings.banner = coalesce(current.banner, base.banner);
+		finalSettings.cost = SettingsHelper.coalesce(current.cost, base.cost);
+		finalSettings.type = SettingsHelper.coalesce(current.type, base.type);
+		finalSettings.color = SettingsHelper.coalesce(current.color, base.color);
+		finalSettings.rarity = SettingsHelper.coalesce(current.rarity, base.rarity);
+		finalSettings.target = SettingsHelper.coalesce(current.target, base.target);
+		finalSettings.stsTags = SettingsHelper.coalesce(current.stsTags, base.stsTags);
+		finalSettings.actions = SettingsHelper.coalesce(current.actions, base.actions);
+		finalSettings.image = SettingsHelper.coalesce(current.image, base.image);
+		finalSettings.background = SettingsHelper.coalesce(current.background, base.background);
+		finalSettings.orb = SettingsHelper.coalesce(current.orb, base.orb);
+		finalSettings.banner = SettingsHelper.coalesce(current.banner, base.banner);
 
 		return finalSettings;
-	}
-
-	private static String coalesce(String a, String b) {
-		return (a != null && !a.isEmpty()) ? a : b;
-	}
-
-	private static String[] coalesce(String[] a, String[] b) {
-		return (a != null && a.length != 0) ? a : b;
-	}
-
-	private static JsonElement[] coalesce(JsonElement[] a, JsonElement[] b) {
-		return (a != null && a.length != 0) ? a : b;
-	}
-
-
-	private static CardTextures coalesce(CardTextures a, CardTextures b) {
-		return (a != null) ? a : b;
 	}
 
 	private void parseSettings(String cardPrefix) {
@@ -145,14 +133,14 @@ public class CardSettings {
 		banner = rawSettings.banner;
 
 		if (rawSettings.actions != null) {
-			actions = new ActionBase[rawSettings.actions.length];
+			actions = new ActionSettingBase[rawSettings.actions.length];
 			for (int i = 0; i < rawSettings.actions.length; i++) {
 				JsonObject json = rawSettings.actions[i].getAsJsonObject();
 
 				actions[i] = actionLibrary.parseAction(json);
 			}
 		} else {
-			actions =  new ActionBase[0];
+			actions = new ActionSettingBase[0];
 		}
 	}
 
@@ -218,8 +206,37 @@ public class CardSettings {
 		}
 	}
 
-	public static class ActionBase {
+	public static class ActionSettingBase {
 		public String type;
+
+
+		protected static <T> T loadRawSettings(String actionId) {
+			String settingsFileName = "/settings/actions/" + actionId + ".json";
+
+			T rawSettings;
+
+			try (InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName)) {
+				Gson reader = new Gson();
+				rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), T);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			RawCardSettings currentSettings;
+
+			if (rawSettings.bases != null) {
+				currentSettings = rawSettings.clone();
+				// we start at the last (most base) base setting and work our way forward, that way we make sure that the later values
+				// are not overridden by earlier "more base" values.
+				for (int i = rawSettings.bases.length - 1; i >= 0; i--) {
+					RawCardSettings baseSettings = loadRawSettings(rawSettings.bases[i]);
+					currentSettings = mergeSettings(currentSettings, baseSettings);
+				}
+			} else {
+				currentSettings = rawSettings;
+			}
+
+			return currentSettings;
+		}
 	}
 
 }

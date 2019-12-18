@@ -13,7 +13,7 @@ public class Block {
 			  ActionLibrary.ISettingsLoader {
 
 		@Override
-		public CardSettings.ActionBase parseAction(JsonObject json) {
+		public CardSettings.ActionSettingBase parseAction(JsonObject json) {
 			Gson reader = new Gson();
 			Settings.RawSettings rawSettings = reader.fromJson(json, Settings.RawSettings.class);
 
@@ -24,7 +24,7 @@ public class Block {
 		}
 	}
 
-	public static class Settings extends CardSettings.ActionBase {
+	public static class Settings extends CardSettings.ActionSettingBase {
 		public int block;
 
 		private RawSettings rawSettings;
