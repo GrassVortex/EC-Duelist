@@ -1,5 +1,6 @@
 package ECDuelist.Cards;
 
+import ECDuelist.Cards.Actions.ActionSettings;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.Text;
 import basemod.abstracts.CustomCard;
@@ -21,7 +22,7 @@ public class Card extends
 		this.settings = settings;
 
 		for (int i = 0; i < settings.actions.length; i++) {
-			CardSettings.ActionSettingBase actionSetting = settings.actions[i];
+			ActionSettings actionSetting = settings.actions[i];
 
 		}
 

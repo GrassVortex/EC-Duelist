@@ -1,6 +1,7 @@
 package ECDuelist.Cards;
 
 import ECDuelist.Cards.Actions.ActionLibrary;
+import ECDuelist.Cards.Actions.ActionSettings;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.SettingsHelper;
@@ -38,7 +39,7 @@ public class CardSettings {
 	public String name;
 	public String description;
 
-	public ActionSettingBase[] actions;
+	public ActionSettings[] actions;
 
 	public CardSettings(String cardPrefix, String cardId) {
 		try {
@@ -133,14 +134,14 @@ public class CardSettings {
 		banner = rawSettings.banner;
 
 		if (rawSettings.actions != null) {
-			actions = new ActionSettingBase[rawSettings.actions.length];
+			actions = new ActionSettings[rawSettings.actions.length];
 			for (int i = 0; i < rawSettings.actions.length; i++) {
 				JsonObject json = rawSettings.actions[i].getAsJsonObject();
 
 				actions[i] = actionLibrary.parseAction(json);
 			}
 		} else {
-			actions = new ActionSettingBase[0];
+			actions = new ActionSettings[0];
 		}
 	}
 
@@ -206,37 +207,7 @@ public class CardSettings {
 		}
 	}
 
-	public static class ActionSettingBase {
-		public String type;
 
 
-		protected static <T> T loadRawSettings(String actionId) {
-			String settingsFileName = "/settings/actions/" + actionId + ".json";
-
-			T rawSettings;
-
-			try (InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName)) {
-				Gson reader = new Gson();
-				rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), T);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-			RawCardSettings currentSettings;
-
-			if (rawSettings.bases != null) {
-				currentSettings = rawSettings.clone();
-				// we start at the last (most base) base setting and work our way forward, that way we make sure that the later values
-				// are not overridden by earlier "more base" values.
-				for (int i = rawSettings.bases.length - 1; i >= 0; i--) {
-					RawCardSettings baseSettings = loadRawSettings(rawSettings.bases[i]);
-					currentSettings = mergeSettings(currentSettings, baseSettings);
-				}
-			} else {
-				currentSettings = rawSettings;
-			}
-
-			return currentSettings;
-		}
-	}
 
 }

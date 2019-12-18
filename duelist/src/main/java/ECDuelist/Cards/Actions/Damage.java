@@ -15,7 +15,7 @@ public class Damage {
 			  ActionLibrary.ISettingsLoader {
 
 		@Override
-		public CardSettings.ActionSettingBase parseAction(JsonObject json) {
+		public ActionSettings parseAction(JsonObject json) {
 			Gson reader = new Gson();
 			Settings.RawSettings rawSettings = reader.fromJson(json, Settings.RawSettings.class);
 
@@ -26,7 +26,7 @@ public class Damage {
 		}
 	}
 
-	public static class Settings extends CardSettings.ActionSettingBase {
+	public static class Settings extends ActionSettings {
 		public int damage;
 		public DamageInfo.DamageType damageType;
 
