@@ -22,7 +22,8 @@ public class Damage extends
 
 	@Override
 	public void initialize(Card card) {
-
+		card.baseDamage = settings.damage;
+		card.damageTypeForTurn = settings.damageType;
 	}
 
 

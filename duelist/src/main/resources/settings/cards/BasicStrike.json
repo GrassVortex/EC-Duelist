@@ -18,7 +18,8 @@
   "actions": [
     {
       "type": "Damage",
-      "damage": 5
+      "damage": 5,
+      "damageType": "NORMAL"
     },
     {
       "type": "Block",

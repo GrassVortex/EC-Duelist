@@ -1,7 +1,9 @@
 {
   "type": "ATTACK",
   "color": "RED",
-  "stsTags": "ATTACK",
+  "stsTags": [
+    "STRIKE"
+  ],
   "background": {
     "small": "images/512/bg_attack_default_gray.png",
     "large": "images/1024/bg_attack_default_gray.png"

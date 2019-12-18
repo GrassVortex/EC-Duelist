@@ -197,6 +197,9 @@ public class CardSettings {
 			background = new CardTextures();
 			orb = new CardTextures();
 			banner = new CardTextures();
+			stsTags = new String[0];
+			modTags = new String[0];
+			actions = new JsonElement[0];
 		}
 
 
