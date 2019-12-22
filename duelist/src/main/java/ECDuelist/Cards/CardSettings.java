@@ -3,6 +3,7 @@ package ECDuelist.Cards;
 import ECDuelist.Cards.Actions.ActionLibrary;
 import ECDuelist.Cards.Actions.ActionSettings;
 import ECDuelist.Cards.Actions.Block;
+import ECDuelist.Characters.Inigo;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.SettingsHelper;
@@ -121,7 +122,11 @@ public class CardSettings {
 		cost = Integer.parseInt(rawSettings.cost);
 
 		type = AbstractCard.CardType.valueOf(rawSettings.type);
-		color = AbstractCard.CardColor.valueOf(rawSettings.color);
+		if (rawSettings.color.equals("ECDuelist")) {
+			color = Inigo.Enums.CardColor;
+		} else {
+			color = AbstractCard.CardColor.valueOf(rawSettings.color);
+		}
 		rarity = AbstractCard.CardRarity.valueOf(rawSettings.rarity);
 		target = AbstractCard.CardTarget.valueOf(rawSettings.target);
 		stsTags = new AbstractCard.CardTags[rawSettings.stsTags.length];
