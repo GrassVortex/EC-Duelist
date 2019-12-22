@@ -1,9 +1,11 @@
 package ECDuelist;
 
+import ECDuelist.Characters.Inigo;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.Text;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
+import basemod.interfaces.EditCharactersSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
@@ -17,7 +19,8 @@ import java.nio.charset.StandardCharsets;
 @SpireInitializer
 public class ModStartup implements
 		  EditCardsSubscriber,
-		  EditStringsSubscriber {
+		  EditStringsSubscriber,
+		  EditCharactersSubscriber {
 
 	private ModSettings settings;
 	private CardLibrary library;
@@ -60,6 +63,12 @@ public class ModStartup implements
 		BaseMod.loadCustomStringsFile(CardStrings.class,
 				  localizationBase + "-CardStrings.json");
 
+	}
+
+	@Override
+	public void receiveEditCharacters() {
+	Inigo character = new Inigo();
+		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.PlayerClass);
 	}
 
 	private class ModSettings {

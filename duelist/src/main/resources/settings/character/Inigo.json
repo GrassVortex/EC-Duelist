@@ -26,5 +26,9 @@
   "hitBoxY": -10,
   "hitBoxWidth": 220,
   "hitBoxHeight": 290,
-  "energyPerTurn": 5
+  "energyPerTurn": 5,
+  "startingHP": 100,
+  "maxHP": 171,
+  "startingGold": 120,
+  "cardDraw": 4
 }

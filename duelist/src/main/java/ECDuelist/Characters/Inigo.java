@@ -11,9 +11,11 @@ import com.google.gson.Gson;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 
 import java.io.IOException;
@@ -34,14 +36,20 @@ public class Inigo extends
 		public static CardLibrary.LibraryType LibraryColor;
 	}
 
-	public Inigo() {
-		this(loadSettings());
+	private Settings settings;
+	private String modPrefix;
+
+	private CharacterStrings localization = CardCrawlGame.languagePack.getCharacterString();
+
+	public Inigo(String modPrefix) {
+		this(loadSettings(), modPrefix);
 	}
 
-	private Inigo(Settings settings) {
-
+	private Inigo(Settings settings, String modPrefix) {
 		super("ECDuelist", Enums.PlayerClass, settings.orbs, settings.orbVfx,
 				  new SpriterAnimation(settings.animation));
+		this.settings = settings;
+		this.modPrefix = modPrefix;
 
 		initializeClass(null,
 				  settings.campfire1,
@@ -64,6 +72,8 @@ public class Inigo extends
 		// Text bubble location
 		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
 		dialogY = (drawY + 220.0F * com.megacrit.cardcrawl.core.Settings.scale);
+
+		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "ECDuelist");
 	}
 
 	private static Settings loadSettings() {
@@ -75,19 +85,38 @@ public class Inigo extends
 		}
 	}
 
+	public String getButtonArtPath() {
+		return settings.mainMenuButton;
+	}
+
+	public String getPortraitPath() {
+		return settings.portrait;
+	}
+
 	@Override
 	public ArrayList<String> getStartingDeck() {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override
 	public ArrayList<String> getStartingRelics() {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override
 	public CharSelectInfo getLoadout() {
-		return null;
+		return new CharSelectInfo(
+				  localization.NAMES[0],
+				  localization.TEXT[0],
+				  settings.startingHP,
+				  settings.maxHP,
+				  0,
+				  settings.startingGold,
+				  settings.cardDraw,
+				  this,
+				  getStartingRelics(),
+				  getStartingDeck(),
+				  false);
 	}
 
 	@Override
@@ -182,5 +211,9 @@ public class Inigo extends
 		public float hitBoxWidth;
 		public float hitBoxHeight;
 		public int energyPerTurn;
+		public int startingHP;
+		public int maxHP;
+		public int startingGold;
+		public int cardDraw;
 	}
 }
