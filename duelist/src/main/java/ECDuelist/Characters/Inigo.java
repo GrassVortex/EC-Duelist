@@ -39,7 +39,7 @@ public class Inigo extends
 	private Settings settings;
 	private String modPrefix;
 
-	private CharacterStrings localization = CardCrawlGame.languagePack.getCharacterString();
+	private CharacterStrings localization;
 
 	public Inigo(String modPrefix) {
 		this(loadSettings(), modPrefix);
