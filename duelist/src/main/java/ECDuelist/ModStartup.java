@@ -7,6 +7,7 @@ import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditCharactersSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
+import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.localization.CardStrings;
@@ -37,6 +38,23 @@ public class ModStartup implements
 		library = new CardLibrary(settings.modPrefix);
 
 		BaseMod.subscribe(this);
+
+		addCardColors();
+	}
+
+	private void addCardColors() {
+		ColorSettings cs;
+		try (InputStream in = CardLibrary.class.getResourceAsStream("/settings/character/color.json")) {
+			Gson reader = new Gson();
+			cs = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), ColorSettings.class);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		BaseMod.addColor(Inigo.Enums.CardColor, cs.bgColor, cs.backColor, cs.frameColor, cs.frameOutlineColor,
+				  cs.descBoxColor, cs.trailVfxColor,
+				  cs.glowColor, cs.attackBg, cs.skillBg, cs.powerBg, cs.energyOrb, cs.attackBgPortrait,
+				  cs.skillBgPortrait, cs.powerBgPortrait, cs.energyOrbPortrait, cs.cardEnergyOrb);
 	}
 
 	@SuppressWarnings("unused")
@@ -76,8 +94,29 @@ public class ModStartup implements
 		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.PlayerClass);
 	}
 
-	private class ModSettings {
+	private static class ModSettings {
 		public String language;
 		public String modPrefix;
 	}
+
+	private static class ColorSettings {
+		public Color bgColor;
+		public Color backColor;
+		public Color frameColor;
+		public Color frameOutlineColor;
+		public Color descBoxColor;
+		public Color trailVfxColor;
+		public Color glowColor;
+		public String attackBg;
+		public String skillBg;
+		public String powerBg;
+		public String energyOrb;
+		public String attackBgPortrait;
+		public String skillBgPortrait;
+		public String powerBgPortrait;
+		public String energyOrbPortrait;
+		public String cardEnergyOrb;
+	}
+
+	;
 }
