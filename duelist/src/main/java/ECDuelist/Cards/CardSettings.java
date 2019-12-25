@@ -70,7 +70,7 @@ public class CardSettings {
 	private static RawCardSettings loadRawSettings(String cardId) {
 		String settingsFileName = "/settings/cards/" + cardId + ".json";
 		RawCardSettings rawSettings;
-		try (InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName)) {
+		try (InputStream in = CardSettings.class.getResourceAsStream(settingsFileName)) {
 			Gson reader = new Gson();
 			rawSettings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), RawCardSettings.class);
 		} catch (IOException e) {

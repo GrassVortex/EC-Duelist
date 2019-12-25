@@ -77,7 +77,7 @@ public class Inigo extends
 	}
 
 	private static Settings loadSettings() {
-		try (InputStream in = CardLibrary.class.getResourceAsStream("settings/character/Inigo.json")) {
+		try (InputStream in = Inigo.class.getResourceAsStream("/settings/character/Inigo.json")) {
 			Gson reader = new Gson();
 			return reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Settings.class);
 		} catch (IOException e) {
