@@ -1,6 +1,7 @@
 package ECDuelist.Cards.Actions;
 
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Path;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -24,7 +25,7 @@ public abstract class ActionSettings {
 	}
 
 	protected static <T extends IRawSettings> T loadRawSettings(String actionId, IMerger<T> merger, Class<T> type) {
-		String settingsFileName = "/settings/actions/" + actionId + ".json";
+		String settingsFileName = Path.SettingsPath + "actions/" + actionId + ".json";
 		T rawSettings;
 		try (InputStream in = CardLibrary.class.getResourceAsStream(settingsFileName)) {
 			Gson reader = new Gson();

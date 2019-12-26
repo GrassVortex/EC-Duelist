@@ -2,6 +2,7 @@ package ECDuelist;
 
 import ECDuelist.Characters.Inigo;
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Path;
 import ECDuelist.Utils.Text;
 import basemod.BaseMod;
 import basemod.interfaces.EditCardsSubscriber;
@@ -28,7 +29,7 @@ public class ModStartup implements
 	private CardLibrary library;
 
 	public ModStartup() {
-		try (InputStream in = ModStartup.class.getResourceAsStream("/settings/modBaseSettings.json")) {
+		try (InputStream in = ModStartup.class.getResourceAsStream(Path.SettingsPath + "modBaseSettings.json")) {
 			Gson reader = new Gson();
 			settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), ModSettings.class);
 		} catch (IOException e) {
@@ -44,7 +45,7 @@ public class ModStartup implements
 
 	private void addCardColors() {
 		ColorSettings cs;
-		try (InputStream in = ModStartup.class.getResourceAsStream("/settings/character/color.json")) {
+		try (InputStream in = ModStartup.class.getResourceAsStream(Path.SettingsPath + "character/color.json")) {
 			Gson reader = new Gson();
 			cs = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), ColorSettings.class);
 		} catch (IOException e) {

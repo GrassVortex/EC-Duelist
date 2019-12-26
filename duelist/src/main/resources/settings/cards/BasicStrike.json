@@ -14,7 +14,7 @@
   "modTags": [
     "BasicStrike"
   ],
-  "image": "images/Attack.png",
+  "image": "Attack.png",
   "actions": [
     {
       "type": "Damage",

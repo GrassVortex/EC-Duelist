@@ -41,13 +41,13 @@
     "b": 0,
     "a": 0
   },
-  "attackBg": "images/512/bg_attack_default_gray.png",
-  "skillBg": "images/512/bg_skill_default_gray.png",
-  "powerBg": "images/512/bg_power_default_gray.png",
-  "energyOrb": "images/512/card_default_gray_orb.png",
-  "attackBgPortrait": "images/1024/bg_attack_default_gray.png",
-  "skillBgPortrait": "images/1024/bg_skill_default_gray.png",
-  "powerBgPortrait": "images/1024/bg_power_default_gray.png",
-  "energyOrbPortrait": "images/1024/card_default_gray_orb.png",
-  "cardEnergyOrb": "images/512/card_small_orb.png"
+  "attackBg": "512/bg_attack_default_gray.png",
+  "skillBg": "512/bg_skill_default_gray.png",
+  "powerBg": "512/bg_power_default_gray.png",
+  "energyOrb": "512/card_default_gray_orb.png",
+  "attackBgPortrait": "1024/bg_attack_default_gray.png",
+  "skillBgPortrait": "1024/bg_skill_default_gray.png",
+  "powerBgPortrait": "1024/bg_power_default_gray.png",
+  "energyOrbPortrait": "1024/card_default_gray_orb.png",
+  "cardEnergyOrb": "512/card_small_orb.png"
 }

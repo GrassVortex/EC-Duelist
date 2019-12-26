@@ -6,6 +6,7 @@ import ECDuelist.Cards.Actions.Block;
 import ECDuelist.Characters.Inigo;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Path;
 import ECDuelist.Utils.SettingsHelper;
 import basemod.helpers.BaseModCardTags;
 import com.google.gson.Gson;
@@ -68,7 +69,7 @@ public class CardSettings {
 	}
 
 	private static RawCardSettings loadRawSettings(String cardId) {
-		String settingsFileName = "/settings/cards/" + cardId + ".json";
+		String settingsFileName = Path.SettingsPath + "cards/" + cardId + ".json";
 		RawCardSettings rawSettings;
 		try (InputStream in = CardSettings.class.getResourceAsStream(settingsFileName)) {
 			Gson reader = new Gson();
@@ -155,12 +156,12 @@ public class CardSettings {
 			image = rawSettings.image;
 		} else {
 			// Set default image path if none is specified
-			image = "images/" + rawSettings.id + ".png";
+			image = rawSettings.id + ".png";
 		}
-
-		background = rawSettings.background;
-		orb = rawSettings.orb;
-		banner = rawSettings.banner;
+		image = Path.ImagesPath + image;
+		background = rawSettings.background.cloneWithPath();
+		orb = rawSettings.orb.cloneWithPath();
+		banner = rawSettings.banner.cloneWithPath();
 
 		if (rawSettings.actions != null) {
 			actions = new ActionSettings[rawSettings.actions.length];
@@ -236,6 +237,13 @@ public class CardSettings {
 			CardTextures c = new CardTextures();
 			c.small = small;
 			c.large = large;
+			return c;
+		}
+
+		public CardTextures cloneWithPath() {
+			CardTextures c = new CardTextures();
+			c.small = Path.ImagesPath + small;
+			c.large = Path.ImagesPath + large;
 			return c;
 		}
 	}

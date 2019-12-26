@@ -1,5 +1,6 @@
 package ECDuelist.Characters;
 
+import ECDuelist.Utils.Path;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
@@ -77,12 +78,28 @@ public class Inigo extends
 	}
 
 	private static Settings loadSettings() {
-		try (InputStream in = Inigo.class.getResourceAsStream("/settings/character/Inigo.json")) {
+		Settings s;
+		try (InputStream in = Inigo.class.getResourceAsStream(Path.SettingsPath + "character/Inigo.json")) {
 			Gson reader = new Gson();
-			return reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Settings.class);
+			s = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Settings.class);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+
+		for (int i = 0; i < s.orbs.length; i++) {
+			s.orbs[i] = Path.ImagesPath + s.orbs[i];
+		}
+		s.orbVfx = Path.ImagesPath + s.orbVfx;
+		s.animation = Path.ImagesPath + s.animation;
+		s.portrait = Path.ImagesPath + s.portrait;
+		s.skeletonAtlas = Path.ImagesPath + s.skeletonAtlas;
+		s.skeletonJson = Path.ImagesPath + s.skeletonJson;
+		s.mainMenuButton = Path.ImagesPath + s.mainMenuButton;
+		s.campfire1 = Path.ImagesPath + s.campfire1;
+		s.campfire2 = Path.ImagesPath + s.campfire2;
+		s.corpse = Path.ImagesPath + s.corpse;
+
+		return s;
 	}
 
 	public String getButtonArtPath() {
