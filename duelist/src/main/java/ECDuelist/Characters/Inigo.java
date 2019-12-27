@@ -20,6 +20,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.localization.LocalizedStrings;
+import com.megacrit.cardcrawl.relics.Kunai;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 
 import java.io.IOException;
@@ -86,6 +87,8 @@ public class Inigo extends
 		e.setTime(e.getEndTime() * MathUtils.random());
 	}
 
+
+
 	private static Settings loadSettings() {
 		Settings s;
 		try (InputStream in = Inigo.class.getResourceAsStream(Path.SettingsPath + "character/Inigo.json")) {
@@ -129,7 +132,7 @@ public class Inigo extends
 	@Override
 	public ArrayList<String> getStartingRelics() {
 		ArrayList<String> relics = new ArrayList<String>();
-		relics.add("Kunai");
+		relics.add(Kunai.ID);
 		return relics;
 	}
 
@@ -203,7 +206,9 @@ public class Inigo extends
 
 	@Override
 	public AbstractPlayer newInstance() {
-		return null;
+		Inigo i = new Inigo(modPrefix);
+		i.postConstructorSetup();
+		return i;
 	}
 
 	@Override
