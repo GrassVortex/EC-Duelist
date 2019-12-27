@@ -2,6 +2,7 @@ package ECDuelist.Characters;
 
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.Text;
+import basemod.ReflectionHacks;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +19,7 @@ import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.localization.LocalizedStrings;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 
 import java.io.IOException;
@@ -25,6 +27,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Inigo extends
 		  CustomPlayer {
@@ -53,6 +57,8 @@ public class Inigo extends
 		this.settings = settings;
 		this.modPrefix = modPrefix;
 
+		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "Inigo");
+
 		initializeClass(null,
 				  settings.campfire1,
 				  settings.campfire2,
@@ -74,8 +80,6 @@ public class Inigo extends
 		// Text bubble location
 		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
 		dialogY = (drawY + 220.0F * com.megacrit.cardcrawl.core.Settings.scale);
-
-		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "Inigo");
 	}
 
 	private static Settings loadSettings() {
