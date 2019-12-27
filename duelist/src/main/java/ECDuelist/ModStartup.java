@@ -88,7 +88,7 @@ public class ModStartup implements
 		String localizationBase =  Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language;
 		// CardStrings
 		BaseMod.loadCustomStringsFile(CardStrings.class,
-				  localizationBase + "/CardStrings.json");
+				  localizationBase + "/cardStrings.json");
 	}
 
 	@Override
