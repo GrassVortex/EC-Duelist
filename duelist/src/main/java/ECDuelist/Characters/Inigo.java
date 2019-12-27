@@ -33,6 +33,8 @@ import java.util.Map;
 public class Inigo extends
 		  CustomPlayer {
 
+
+
 	public static class Enums {
 		@SpireEnum
 		public static AbstractPlayer.PlayerClass PlayerClass;
@@ -59,6 +61,12 @@ public class Inigo extends
 
 		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "Inigo");
 
+		// Text bubble location
+		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
+		dialogY = (drawY + 220.0F * com.megacrit.cardcrawl.core.Settings.scale);
+	}
+
+	public void postConstructorSetup() {
 		initializeClass(null,
 				  settings.campfire1,
 				  settings.campfire2,
@@ -76,10 +84,6 @@ public class Inigo extends
 				  settings.skeletonScale);
 		AnimationState.TrackEntry e = state.setAnimation(0, "animation", true);
 		e.setTime(e.getEndTime() * MathUtils.random());
-
-		// Text bubble location
-		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
-		dialogY = (drawY + 220.0F * com.megacrit.cardcrawl.core.Settings.scale);
 	}
 
 	private static Settings loadSettings() {

@@ -95,6 +95,7 @@ public class ModStartup implements
 	@Override
 	public void receiveEditCharacters() {
 		Inigo character = new Inigo(settings.modPrefix);
+		character.postConstructorSetup();
 		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.PlayerClass);
 	}
 
