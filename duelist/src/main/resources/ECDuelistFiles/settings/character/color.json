@@ -41,6 +41,24 @@
     "b": 0,
     "a": 0
   },
+  "cardRenderColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 0
+  },
+  "cardTrailColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 0
+  },
+  "slashAttackColor": {
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "a": 0
+  },
   "attackBg": "512/bg_attack_default_gray.png",
   "skillBg": "512/bg_skill_default_gray.png",
   "powerBg": "512/bg_power_default_gray.png",

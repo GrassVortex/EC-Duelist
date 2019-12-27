@@ -1,6 +1,7 @@
 package ECDuelist.Characters;
 
 import ECDuelist.Cards.BasicStrike;
+import ECDuelist.ModStartup;
 import ECDuelist.Utils.Constants;
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.Text;
@@ -18,6 +19,8 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
+import com.megacrit.cardcrawl.helpers.FontHelper;
+import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.relics.Kunai;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
@@ -31,8 +34,6 @@ import java.util.ArrayList;
 public class Inigo extends
 		  CustomPlayer {
 
-
-
 	public static class Enums {
 		@SpireEnum
 		public static AbstractPlayer.PlayerClass ECDuelistPlayerClass;
@@ -42,19 +43,21 @@ public class Inigo extends
 		public static CardLibrary.LibraryType LibraryColor;
 	}
 
-	private Settings settings;
-	private CharacterStrings localization;
+	public static final String CharacterName = "Inigo";
+	private static CharacterStrings localization;
 
-	public Inigo() {
-		this(loadSettings());
+	private Settings settings;
+	private ModStartup.ColorSettings colorSettings;
+
+	public Inigo(ModStartup.ColorSettings colorSettings) {
+		this(loadSettings(), colorSettings);
 	}
 
-	private Inigo(Settings settings) {
+	private Inigo(Settings settings, ModStartup.ColorSettings colorSettings) {
 		super("ECDuelist", Enums.ECDuelistPlayerClass, settings.orbs, settings.orbVfx,
 				  new SpriterAnimation(settings.animation));
 		this.settings = settings;
-
-		localization = CardCrawlGame.languagePack.getCharacterString(Constants.ModPrefix + "Inigo");
+		this.colorSettings = colorSettings;
 
 		// Text bubble location
 		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
@@ -81,11 +84,13 @@ public class Inigo extends
 		e.setTime(e.getEndTime() * MathUtils.random());
 	}
 
-
+	public static void initializeStatics() {
+		localization = CardCrawlGame.languagePack.getCharacterString(Constants.ModPrefix + CharacterName);
+	}
 
 	private static Settings loadSettings() {
 		Settings s;
-		try (InputStream in = Inigo.class.getResourceAsStream(Path.SettingsPath + "character/Inigo.json")) {
+		try (InputStream in = Inigo.class.getResourceAsStream(Path.SettingsPath + "character/" + CharacterName + ".json")) {
 			Gson reader = new Gson();
 			s = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Settings.class);
 		} catch (IOException e) {
@@ -132,8 +137,6 @@ public class Inigo extends
 
 	@Override
 	public CharSelectInfo getLoadout() {
-		Text.println("localization %s  %s", localization, localization.NAMES[0]);
-
 		return new CharSelectInfo(
 				  localization.NAMES[0],
 				  localization.TEXT[0],
@@ -148,71 +151,84 @@ public class Inigo extends
 				  false);
 	}
 
+	// The class name as it appears next to your player name in-game
 	@Override
 	public String getTitle(PlayerClass playerClass) {
-		return null;
+		return localization.NAMES[1];
 	}
 
 	@Override
 	public AbstractCard.CardColor getCardColor() {
-		return null;
+		return Enums.CardColor;
 	}
 
 	@Override
 	public Color getCardRenderColor() {
-		return null;
+		return colorSettings.cardRenderColor;
 	}
 
+	//Which card should be obtainable from the Match and Keep event?
 	@Override
 	public AbstractCard getStartCardForEvent() {
-		return null;
+		return new BasicStrike();
 	}
 
 	@Override
 	public Color getCardTrailColor() {
-		return null;
+		return colorSettings.cardTrailColor;
 	}
 
+	// Should return how much HP your maximum HP reduces by when starting a run at
+	// Ascension 14 or higher. (ironclad loses 5, defect and silent lose 4 hp respectively)
 	@Override
 	public int getAscensionMaxHPLoss() {
 		return 0;
 	}
 
+	// Should return a BitmapFont object that you can use to customize how your
+	// energy is displayed from within the energy orb.
 	@Override
 	public BitmapFont getEnergyNumFont() {
-		return null;
+		return FontHelper.energyNumFontRed;
 	}
 
+	// Effects to do during character select
 	@Override
 	public void doCharSelectScreenSelectEffect() {
-
+		CardCrawlGame.sound.playA("ATTACK_DAGGER_1", 1.25f); // Sound Effect
+		CardCrawlGame.screenShake.shake(ScreenShake.ShakeIntensity.LOW, ScreenShake.ShakeDur.SHORT, false); // Screen Effect
 	}
 
+	// character Select on-button-press sound effect
 	@Override
 	public String getCustomModeCharacterButtonSoundKey() {
-		return null;
+		return "ATTACK_DAGGER_1";
 	}
 
+	// Should return class name as it appears in run history screen.
 	@Override
 	public String getLocalizedCharacterName() {
-		return null;
+		return localization.NAMES[0];
 	}
 
 	@Override
 	public AbstractPlayer newInstance() {
-		Inigo i = new Inigo();
+		Inigo i = new Inigo(colorSettings);
 		i.postConstructorSetup();
 		return i;
 	}
 
+	// Should return a string containing what text is shown when your character is
+	// about to attack the heart. For example, the defect is "NL You charge your
+	// core to its maximum..."
 	@Override
 	public String getSpireHeartText() {
-		return null;
+		return localization.TEXT[1];
 	}
 
 	@Override
 	public Color getSlashAttackColor() {
-		return null;
+		return colorSettings.slashAttackColor;
 	}
 
 	@Override
@@ -220,9 +236,12 @@ public class Inigo extends
 		return new AbstractGameAction.AttackEffect[0];
 	}
 
+	// The vampire events refer to the base game characters as "brother", "sister",
+	// and "broken one" respectively.This method should return a String containing
+	// the full text that will be displayed as the first screen of the vampires event.
 	@Override
 	public String getVampireText() {
-		return null;
+		return localization.TEXT[2];
 	}
 
 	private class Settings {

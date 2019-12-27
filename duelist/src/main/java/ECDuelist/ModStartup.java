@@ -27,6 +27,7 @@ public class ModStartup implements
 		  EditCharactersSubscriber {
 
 	private ModSettings settings;
+	private ColorSettings colorSettings;
 	private CardLibrary library;
 
 	public ModStartup() {
@@ -60,6 +61,7 @@ public class ModStartup implements
 				  cs.descBoxColor, cs.trailVfxColor,
 				  cs.glowColor, cs.attackBg, cs.skillBg, cs.powerBg, cs.energyOrb, cs.attackBgPortrait,
 				  cs.skillBgPortrait, cs.powerBgPortrait, cs.energyOrbPortrait, cs.cardEnergyOrb);
+		colorSettings = cs;
 	}
 
 	@SuppressWarnings("unused")
@@ -94,7 +96,10 @@ public class ModStartup implements
 
 	@Override
 	public void receiveEditCharacters() {
-		Inigo character = new Inigo();
+
+		Inigo.initializeStatics();
+
+		Inigo character = new Inigo(colorSettings);
 		character.postConstructorSetup();
 		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.ECDuelistPlayerClass);
 	}
@@ -103,7 +108,7 @@ public class ModStartup implements
 		public String language;
 	}
 
-	private static class ColorSettings {
+	public static class ColorSettings {
 		public Color bgColor;
 		public Color backColor;
 		public Color frameColor;
@@ -120,6 +125,10 @@ public class ModStartup implements
 		public String powerBgPortrait;
 		public String energyOrbPortrait;
 		public String cardEnergyOrb;
+
+		public Color cardRenderColor;
+		public Color cardTrailColor;
+		public Color slashAttackColor;
 	}
 
 	;
