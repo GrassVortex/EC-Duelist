@@ -81,11 +81,11 @@ public class ModStartup implements
 		Text.println(new Object() {
 		}.getClass().getEnclosingMethod().getName());
 
-		String localizationBase = String.join("/", "localization", settings.language, settings.modPrefix);
+		String localizationBase = String.join("/", Path.ResourcesBasePath + "localization", settings.language);
 
 		// CardStrings
 		BaseMod.loadCustomStringsFile(CardStrings.class,
-				  localizationBase + "-CardStrings.json");
+				  localizationBase + "/CardStrings.json");
 
 	}
 

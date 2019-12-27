@@ -8,6 +8,7 @@ import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.SettingsHelper;
+import ECDuelist.Utils.Text;
 import basemod.helpers.BaseModCardTags;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -66,6 +67,10 @@ public class CardSettings {
 	public static void initializeStatics() {
 		actionLibrary = new ActionLibrary();
 		actionLibrary.registerActions();
+	}
+
+	public void print(){
+		Text.println("Settings. id %s%nimage %s", id, image);
 	}
 
 	private static RawCardSettings loadRawSettings(String cardId) {

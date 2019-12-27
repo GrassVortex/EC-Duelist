@@ -6,6 +6,7 @@ import ECDuelist.Cards.BasicDefend;
 import ECDuelist.Cards.BasicStrike;
 import basemod.BaseMod;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,7 +46,9 @@ public class CardLibrary {
 		String cardId = cardClass.getSimpleName();
 		System.out.println("createCard cardId " + cardId);
 		// Create and save the card setting so that the card instance can load it by name later
-		cardSettings.put(cardId, new CardSettings(cardPrefix, cardId));
+		CardSettings s = new CardSettings(cardPrefix, cardId);
+		s.print();
+		cardSettings.put(cardId, s);
 		Card card = instantiateCard(cardClass);
 		cards.add(card);
 	}
