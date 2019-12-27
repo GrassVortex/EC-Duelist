@@ -96,7 +96,7 @@ public class ModStartup implements
 	public void receiveEditCharacters() {
 		Inigo character = new Inigo(settings.modPrefix);
 		character.postConstructorSetup();
-		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.PlayerClass);
+		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.ECDuelistPlayerClass);
 	}
 
 	private static class ModSettings {

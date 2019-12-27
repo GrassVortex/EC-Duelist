@@ -2,7 +2,6 @@ package ECDuelist.Characters;
 
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.Text;
-import basemod.ReflectionHacks;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
@@ -16,10 +15,8 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.EnergyManager;
-import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
-import com.megacrit.cardcrawl.localization.LocalizedStrings;
 import com.megacrit.cardcrawl.relics.Kunai;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 
@@ -28,8 +25,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 public class Inigo extends
 		  CustomPlayer {
@@ -38,7 +33,7 @@ public class Inigo extends
 
 	public static class Enums {
 		@SpireEnum
-		public static AbstractPlayer.PlayerClass PlayerClass;
+		public static AbstractPlayer.PlayerClass ECDuelistPlayerClass;
 		@SpireEnum(name = "ECDuelist_Color") // These two HAVE to have the same absolutely identical name.
 		public static AbstractCard.CardColor CardColor;
 		@SpireEnum(name = "ECDuelist_Color")
@@ -55,7 +50,7 @@ public class Inigo extends
 	}
 
 	private Inigo(Settings settings, String modPrefix) {
-		super("ECDuelist", Enums.PlayerClass, settings.orbs, settings.orbVfx,
+		super("ECDuelist", Enums.ECDuelistPlayerClass, settings.orbs, settings.orbVfx,
 				  new SpriterAnimation(settings.animation));
 		this.settings = settings;
 		this.modPrefix = modPrefix;
