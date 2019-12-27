@@ -44,6 +44,9 @@ public class ModStartup implements
 	}
 
 	private void addCardColors() {
+		Text.println(new Object() {
+		}.getClass().getEnclosingMethod().getName());
+
 		ColorSettings cs;
 		try (InputStream in = ModStartup.class.getResourceAsStream(Path.SettingsPath + "character/color.json")) {
 			Gson reader = new Gson();
@@ -72,6 +75,7 @@ public class ModStartup implements
 	public void receiveEditCards() {
 		Text.println(new Object() {
 		}.getClass().getEnclosingMethod().getName());
+
 		library.createCards();
 
 	}
@@ -81,12 +85,10 @@ public class ModStartup implements
 		Text.println(new Object() {
 		}.getClass().getEnclosingMethod().getName());
 
-		String localizationBase = String.join("/", Path.ResourcesBasePath + "localization", settings.language);
-
+		String localizationBase =  Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language;
 		// CardStrings
 		BaseMod.loadCustomStringsFile(CardStrings.class,
 				  localizationBase + "/CardStrings.json");
-
 	}
 
 	@Override
