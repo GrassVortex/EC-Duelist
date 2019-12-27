@@ -1,6 +1,7 @@
 package ECDuelist.Characters;
 
 import ECDuelist.Utils.Path;
+import ECDuelist.Utils.Text;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
@@ -74,7 +75,7 @@ public class Inigo extends
 		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
 		dialogY = (drawY + 220.0F * com.megacrit.cardcrawl.core.Settings.scale);
 
-		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "ECDuelist");
+		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "Inigo");
 	}
 
 	private static Settings loadSettings() {
@@ -112,16 +113,22 @@ public class Inigo extends
 
 	@Override
 	public ArrayList<String> getStartingDeck() {
-		return new ArrayList<String>();
+		ArrayList<String> cards = new ArrayList<String>();
+		cards.add(modPrefix + "Strike");
+		return cards;
 	}
 
 	@Override
 	public ArrayList<String> getStartingRelics() {
-		return new ArrayList<String>();
+		ArrayList<String> relics = new ArrayList<String>();
+		relics.add("Kunai");
+		return relics;
 	}
 
 	@Override
 	public CharSelectInfo getLoadout() {
+		Text.println("localization %s  %s", localization, localization.NAMES[0]);
+
 		return new CharSelectInfo(
 				  localization.NAMES[0],
 				  localization.TEXT[0],

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.localization.CardStrings;
+import com.megacrit.cardcrawl.localization.CharacterStrings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,10 +86,10 @@ public class ModStartup implements
 		Text.println(new Object() {
 		}.getClass().getEnclosingMethod().getName());
 
-		String localizationBase =  Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language;
-		// CardStrings
-		BaseMod.loadCustomStringsFile(CardStrings.class,
-				  localizationBase + "/cardStrings.json");
+		String localizationBase = Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language + "/";
+
+		BaseMod.loadCustomStringsFile(CardStrings.class, localizationBase + "cardStrings.json");
+		BaseMod.loadCustomStringsFile(CharacterStrings.class, localizationBase + "characterStrings.json");
 	}
 
 	@Override
