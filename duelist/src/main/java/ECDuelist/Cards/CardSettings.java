@@ -124,7 +124,7 @@ public class CardSettings {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
 		rawId = rawSettings.id;
 
-		id = String.join(":", cardPrefix, rawId);
+		id = cardPrefix + rawId;
 		cost = Integer.parseInt(rawSettings.cost);
 
 		type = AbstractCard.CardType.valueOf(rawSettings.type);

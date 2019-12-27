@@ -86,7 +86,7 @@ public class ModStartup implements
 		Text.println(new Object() {
 		}.getClass().getEnclosingMethod().getName());
 
-		String localizationBase = Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language + "/";
+		String localizationBase = Path.ResourcesBasePathNotAbsolute + "localization/" + settings.language + "/ECDuelist-";
 
 		BaseMod.loadCustomStringsFile(CardStrings.class, localizationBase + "cardStrings.json");
 		BaseMod.loadCustomStringsFile(CharacterStrings.class, localizationBase + "characterStrings.json");
