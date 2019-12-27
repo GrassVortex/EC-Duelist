@@ -14,15 +14,13 @@ public class CardLibrary {
 
 	private static HashMap<String, CardSettings> cardSettings;
 
-	private String cardPrefix;
 	private ArrayList<Card> cards;
 
-	public CardLibrary(String cardPrefix) {
+	public CardLibrary() {
 		if (cardSettings != null) {
 			throw new IllegalStateException("Can't create more than one " + CardLibrary.class.getName());
 		}
 
-		this.cardPrefix = cardPrefix;
 		cardSettings = new HashMap<String, CardSettings>();
 		CardSettings.initializeStatics();
 	}
@@ -46,7 +44,7 @@ public class CardLibrary {
 		String cardId = cardClass.getSimpleName();
 		System.out.println("createCard cardId " + cardId);
 		// Create and save the card setting so that the card instance can load it by name later
-		CardSettings s = new CardSettings(cardPrefix, cardId);
+		CardSettings s = new CardSettings(cardId);
 		s.print();
 		cardSettings.put(cardId, s);
 		Card card = instantiateCard(cardClass);

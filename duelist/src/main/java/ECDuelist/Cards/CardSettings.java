@@ -6,6 +6,7 @@ import ECDuelist.Cards.Actions.Block;
 import ECDuelist.Characters.Inigo;
 import ECDuelist.InitializationException;
 import ECDuelist.Settings.CardLibrary;
+import ECDuelist.Utils.Constants;
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.SettingsHelper;
 import ECDuelist.Utils.Text;
@@ -47,10 +48,10 @@ public class CardSettings {
 
 	public ActionSettings[] actions;
 
-	public CardSettings(String cardPrefix, String cardId) {
+	public CardSettings(String cardId) {
 		try {
 			rawSettings = loadRawSettings(cardId);
-			parseSettings(cardPrefix);
+			parseSettings();
 			localizedStrings = CardCrawlGame.languagePack.getCardStrings(id);
 			readLocalizedStrings();
 		} catch (NumberFormatException ex) {
@@ -120,11 +121,11 @@ public class CardSettings {
 		return finalSettings;
 	}
 
-	private void parseSettings(String cardPrefix) {
+	private void parseSettings() {
 		// Apply Prefix to the id in order to avoid conflicts with other mods
 		rawId = rawSettings.id;
 
-		id = cardPrefix + rawId;
+		id = Constants.ModPrefix + rawId;
 		cost = Integer.parseInt(rawSettings.cost);
 
 		type = AbstractCard.CardType.valueOf(rawSettings.type);

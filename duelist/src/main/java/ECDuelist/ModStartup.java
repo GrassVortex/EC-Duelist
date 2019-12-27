@@ -37,7 +37,7 @@ public class ModStartup implements
 			throw new RuntimeException(e);
 		}
 
-		library = new CardLibrary(settings.modPrefix);
+		library = new CardLibrary();
 
 		BaseMod.subscribe(this);
 
@@ -94,14 +94,13 @@ public class ModStartup implements
 
 	@Override
 	public void receiveEditCharacters() {
-		Inigo character = new Inigo(settings.modPrefix);
+		Inigo character = new Inigo();
 		character.postConstructorSetup();
 		BaseMod.addCharacter(character, character.getButtonArtPath(), character.getPortraitPath(), Inigo.Enums.ECDuelistPlayerClass);
 	}
 
 	private static class ModSettings {
 		public String language;
-		public String modPrefix;
 	}
 
 	private static class ColorSettings {

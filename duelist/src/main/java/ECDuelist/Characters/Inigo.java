@@ -1,5 +1,7 @@
 package ECDuelist.Characters;
 
+import ECDuelist.Cards.BasicStrike;
+import ECDuelist.Utils.Constants;
 import ECDuelist.Utils.Path;
 import ECDuelist.Utils.Text;
 import basemod.abstracts.CustomPlayer;
@@ -41,21 +43,18 @@ public class Inigo extends
 	}
 
 	private Settings settings;
-	private String modPrefix;
-
 	private CharacterStrings localization;
 
-	public Inigo(String modPrefix) {
-		this(loadSettings(), modPrefix);
+	public Inigo() {
+		this(loadSettings());
 	}
 
-	private Inigo(Settings settings, String modPrefix) {
+	private Inigo(Settings settings) {
 		super("ECDuelist", Enums.ECDuelistPlayerClass, settings.orbs, settings.orbVfx,
 				  new SpriterAnimation(settings.animation));
 		this.settings = settings;
-		this.modPrefix = modPrefix;
 
-		localization = CardCrawlGame.languagePack.getCharacterString(modPrefix + "Inigo");
+		localization = CardCrawlGame.languagePack.getCharacterString(Constants.ModPrefix + "Inigo");
 
 		// Text bubble location
 		dialogX = (drawX + 0.0F * com.megacrit.cardcrawl.core.Settings.scale);
@@ -120,7 +119,7 @@ public class Inigo extends
 	@Override
 	public ArrayList<String> getStartingDeck() {
 		ArrayList<String> cards = new ArrayList<String>();
-		cards.add(modPrefix + "Strike");
+		cards.add(BasicStrike.PrefixedId);
 		return cards;
 	}
 
@@ -201,7 +200,7 @@ public class Inigo extends
 
 	@Override
 	public AbstractPlayer newInstance() {
-		Inigo i = new Inigo(modPrefix);
+		Inigo i = new Inigo();
 		i.postConstructorSetup();
 		return i;
 	}
