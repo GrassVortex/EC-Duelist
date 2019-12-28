@@ -57,6 +57,17 @@ public class ModStartup implements
 			throw new RuntimeException(e);
 		}
 
+		// Add the correct prefix to make the image paths work
+		cs.attackBg = Path.ImagesPath + cs.attackBg;
+		cs.skillBg = Path.ImagesPath + cs.skillBg;
+		cs.powerBg = Path.ImagesPath + cs.powerBg;
+		cs.energyOrb = Path.ImagesPath + cs.energyOrb;
+		cs.attackBgPortrait = Path.ImagesPath + cs.attackBgPortrait;
+		cs.skillBgPortrait = Path.ImagesPath + cs.skillBgPortrait;
+		cs.powerBgPortrait = Path.ImagesPath + cs.powerBgPortrait;
+		cs.energyOrbPortrait = Path.ImagesPath + cs.energyOrbPortrait;
+		cs.cardEnergyOrb = Path.ImagesPath + cs.cardEnergyOrb;
+
 		BaseMod.addColor(Inigo.Enums.CardColor, cs.bgColor, cs.backColor, cs.frameColor, cs.frameOutlineColor,
 				  cs.descBoxColor, cs.trailVfxColor,
 				  cs.glowColor, cs.attackBg, cs.skillBg, cs.powerBg, cs.energyOrb, cs.attackBgPortrait,
