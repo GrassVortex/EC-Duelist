@@ -4,6 +4,9 @@ import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Block extends
 		  ActionBase {
@@ -21,6 +24,11 @@ public class Block extends
 	@Override
 	public void initialize(Card card) {
 
+	}
+
+	@Override
+	public AbstractGameAction[] createActions(AbstractPlayer player, AbstractMonster monster, Card card) {
+		return new AbstractGameAction[0];
 	}
 
 	private static class Factory implements

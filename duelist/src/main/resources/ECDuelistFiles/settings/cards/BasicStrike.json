@@ -19,7 +19,8 @@
     {
       "type": "Damage",
       "damage": 5,
-      "damageType": "NORMAL"
+      "damageType": "NORMAL",
+      "attackEffect": "SLASH_HORIZONTAL"
     },
     {
       "type": "Block",

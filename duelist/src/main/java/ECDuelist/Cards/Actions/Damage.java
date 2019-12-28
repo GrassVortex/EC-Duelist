@@ -6,7 +6,12 @@ import ECDuelist.Utils.SettingsHelper;
 import ECDuelist.Utils.Text;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 public class Damage extends
 		  ActionBase {
@@ -26,6 +31,14 @@ public class Damage extends
 		card.damageTypeForTurn = settings.damageType;
 	}
 
+	@Override
+	public AbstractGameAction[] createActions(AbstractPlayer player, AbstractMonster monster, Card card) {
+		AbstractGameAction[] actions = new AbstractGameAction[1];
+		actions[0] = new DamageAction(monster, new DamageInfo(player, settings.damage, settings.damageType),
+				  settings.attackEffect);
+
+		return actions;
+	}
 
 	private static class Factory implements
 			  ActionLibrary.IActionFactory {
@@ -46,6 +59,7 @@ public class Damage extends
 			Settings settings = new Settings();
 			settings.damage = Integer.parseInt(rawSettings.damage);
 			settings.damageType = DamageInfo.DamageType.valueOf(rawSettings.damageType);
+			settings.attackEffect = AbstractGameAction.AttackEffect.valueOf(rawSettings.attackEffect);
 
 			return settings;
 		}
@@ -58,6 +72,7 @@ public class Damage extends
 			Settings.RawSettings result = new Settings.RawSettings();
 			result.damage = SettingsHelper.coalesce(a.damage, b.damage);
 			result.damageType = SettingsHelper.coalesce(a.damageType, b.damageType);
+			result.attackEffect = SettingsHelper.coalesce(a.attackEffect, b.attackEffect);
 
 			return result;
 		}
@@ -68,6 +83,7 @@ public class Damage extends
 
 		public int damage;
 		public DamageInfo.DamageType damageType;
+		public AbstractGameAction.AttackEffect attackEffect;
 
 		private RawSettings rawSettings;
 
@@ -81,6 +97,7 @@ public class Damage extends
 			public String[] bases;
 			public String damage;
 			public String damageType;
+			public String attackEffect;
 
 			@Override
 			public IRawSettings clone() {
@@ -88,6 +105,7 @@ public class Damage extends
 				settings.bases = bases.clone();
 				settings.damage = damage;
 				settings.damageType = damageType;
+				settings.attackEffect = attackEffect;
 				return settings;
 			}
 
