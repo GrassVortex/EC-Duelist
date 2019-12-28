@@ -2,7 +2,7 @@
   "bases": [
     "attackBase"
   ],
-  "id": "Defend",
+  "id": "BasicDefend",
   "name": "Defend",
   "cost": "1",
   "description": "test description",

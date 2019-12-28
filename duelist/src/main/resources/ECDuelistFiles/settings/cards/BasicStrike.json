@@ -2,7 +2,7 @@
   "bases": [
     "attackBase"
   ],
-  "id": "Strike",
+  "id": "BasicStrike",
   "name": "Strike",
   "cost": "1",
   "type": "ATTACK",
