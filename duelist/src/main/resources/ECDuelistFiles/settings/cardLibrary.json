@@ -2,6 +2,12 @@
   "cards": [
     "BasicStrike",
     "BasicDefend",
-    "SuperAttack"
+    "SuperAttack",
+    "common-skill",
+    "uncommon-skill",
+    "rare-skill",
+    "common-power",
+    "uncommon-power",
+    "rare-power"
   ]
 }

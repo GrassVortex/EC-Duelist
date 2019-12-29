@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "powerBase"
+  ],
+  "id": "common-power",
+  "name": "Common power",
+  "cost": "0",
+  "rarity": "COMMON",
+  "target": "SELF",
+  "actions": [
+  ]
+}

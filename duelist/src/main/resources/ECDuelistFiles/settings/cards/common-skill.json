@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "skillBase"
+  ],
+  "id": "common-skill",
+  "name": "Common skill",
+  "cost": "0",
+  "rarity": "COMMON",
+  "target": "SELF",
+  "actions": [
+  ]
+}

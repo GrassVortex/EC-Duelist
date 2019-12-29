@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "skillBase"
+  ],
+  "id": "rare-skill",
+  "name": "Rare skill",
+  "cost": "0",
+  "rarity": "RARE",
+  "target": "SELF",
+  "actions": [
+  ]
+}

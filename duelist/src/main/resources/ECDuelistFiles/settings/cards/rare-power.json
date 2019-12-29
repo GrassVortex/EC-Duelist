@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "powerBase"
+  ],
+  "id": "rare-power",
+  "name": "Rare power",
+  "cost": "0",
+  "rarity": "RARE",
+  "target": "SELF",
+  "actions": [
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "powerBase"
+  ],
+  "id": "uncommon-power",
+  "name": "Uncommon power",
+  "cost": "0",
+  "rarity": "UNCOMMON",
+  "target": "SELF",
+  "actions": [
+  ]
+}
