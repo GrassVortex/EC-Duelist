@@ -18,13 +18,9 @@
   "actions": [
     {
       "type": "Damage",
-      "damage": 5,
+      "damage": 50,
       "damageType": "NORMAL",
       "attackEffect": "SLASH_HORIZONTAL"
-    },
-    {
-      "type": "Block",
-      "block": 15
     }
   ]
 }

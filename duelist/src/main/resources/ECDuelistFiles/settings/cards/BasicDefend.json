@@ -5,13 +5,18 @@
   "id": "BasicDefend",
   "name": "Defend",
   "cost": "1",
-  "description": "test description",
-  "type": "ATTACK",
+  "type": "SKILL",
   "rarity": "COMMON",
-  "target": "ENEMY",
-  "stsTags": [
-    "STRIKE"
+  "target": "SELF",
+  "stsTags": [],
+  "modTags": [
+    "BasicDefend"
   ],
   "image": "Attack.png",
-  "actions": []
+  "actions": [
+    {
+      "type": "Block",
+      "block": 50
+    }
+  ]
 }
