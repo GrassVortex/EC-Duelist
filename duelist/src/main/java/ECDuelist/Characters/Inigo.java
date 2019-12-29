@@ -235,6 +235,7 @@ public class Inigo extends
 
 	@Override
 	public AbstractGameAction.AttackEffect[] getSpireHeartSlashEffect() {
+		// TODO Add at least one effect or the game crashes when approaching the heart.
 		return new AbstractGameAction.AttackEffect[0];
 	}
 

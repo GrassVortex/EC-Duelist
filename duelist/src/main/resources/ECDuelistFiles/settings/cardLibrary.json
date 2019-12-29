@@ -11,6 +11,10 @@
     "rare-skill",
     "common-power",
     "uncommon-power",
-    "rare-power"
+    "rare-power",
+
+    "common-attack2",
+    "uncommon-attack2",
+    "rare-attack2"
   ]
 }

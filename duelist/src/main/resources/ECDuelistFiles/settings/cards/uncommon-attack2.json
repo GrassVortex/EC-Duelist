@@ -1,0 +1,12 @@
+{
+  "bases": [
+    "attackBase"
+  ],
+  "id": "uncommon-attack2",
+  "name": "Uncommon attack2",
+  "cost": "1",
+  "rarity": "UNCOMMON",
+  "target": "ENEMY",
+  "actions": [
+  ]
+}
