@@ -5,6 +5,9 @@ import ECDuelist.Cards.CardSettings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
@@ -23,12 +26,15 @@ public class Block extends
 
 	@Override
 	public void initialize(Card card) {
-
+		card.baseBlock = settings.block;
 	}
 
 	@Override
 	public AbstractGameAction[] createActions(AbstractPlayer player, AbstractMonster monster, Card card) {
-		return new AbstractGameAction[0];
+		AbstractGameAction[] actions = new AbstractGameAction[1];
+		actions[0] = new GainBlockAction(player, player, settings.block);
+
+		return actions;
 	}
 
 	private static class Factory implements
