@@ -6,6 +6,7 @@ import ECDuelist.Cards.Actions.ActionSettings;
 import ECDuelist.Settings.CardLibrary;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
@@ -19,7 +20,7 @@ public class Card extends
 	private CardSettings settings;
 	private ActionBase[] cardActions;
 
-	protected Card(String cardId) {
+	public Card(String cardId) {
 		this(CardLibrary.getSettings(cardId));
 	}
 
@@ -47,6 +48,10 @@ public class Card extends
 		return true;
 	}
 
+	@Override
+	public AbstractCard makeCopy() {
+		return new Card(settings);
+	}
 
 	@Override
 	public void upgrade() {

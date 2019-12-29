@@ -6,5 +6,9 @@
   "ECDuelist:BasicDefend": {
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block."
+  },
+  "ECDuelist:SuperAttack": {
+    "NAME": "SuperAttack",
+    "DESCRIPTION": "Deal !D! Damage."
   }
 }

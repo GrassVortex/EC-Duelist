@@ -1,11 +1,9 @@
 package ECDuelist.Characters;
 
-import ECDuelist.Cards.BasicDefend;
-import ECDuelist.Cards.BasicStrike;
+import ECDuelist.Cards.Card;
 import ECDuelist.ModStartup;
 import ECDuelist.Utils.Constants;
 import ECDuelist.Utils.Path;
-import ECDuelist.Utils.Text;
 import basemod.abstracts.CustomPlayer;
 import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
@@ -125,12 +123,9 @@ public class Inigo extends
 	@Override
 	public ArrayList<String> getStartingDeck() {
 		ArrayList<String> cards = new ArrayList<String>();
-		cards.add(BasicStrike.PrefixedId);
-		cards.add(BasicStrike.PrefixedId);
-		cards.add(BasicStrike.PrefixedId);
-		cards.add(BasicDefend.PrefixedId);
-		cards.add(BasicDefend.PrefixedId);
-		cards.add(BasicDefend.PrefixedId);
+		for (String cardId : settings.startingHand) {
+			cards.add(Constants.ModPrefix + cardId);
+		}
 		return cards;
 	}
 
@@ -176,7 +171,8 @@ public class Inigo extends
 	//Which card should be obtainable from the Match and Keep event?
 	@Override
 	public AbstractCard getStartCardForEvent() {
-		return new BasicStrike();
+		// TODO How should this be handled?
+		return new Card(settings.startingHand[0]);
 	}
 
 	@Override
@@ -271,5 +267,6 @@ public class Inigo extends
 		public int maxHP;
 		public int startingGold;
 		public int cardDraw;
+		public String[] startingHand;
 	}
 }

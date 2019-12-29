@@ -2,11 +2,15 @@ package ECDuelist.Settings;
 
 import ECDuelist.Cards.Card;
 import ECDuelist.Cards.CardSettings;
-import ECDuelist.Cards.BasicDefend;
-import ECDuelist.Cards.BasicStrike;
+import ECDuelist.Utils.Path;
 import basemod.BaseMod;
+import com.google.gson.Gson;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,6 +18,7 @@ public class CardLibrary {
 
 	private static HashMap<String, CardSettings> cardSettings;
 
+	private Settings settings;
 	private ArrayList<Card> cards;
 
 	public CardLibrary() {
@@ -23,13 +28,21 @@ public class CardLibrary {
 
 		cardSettings = new HashMap<String, CardSettings>();
 		CardSettings.initializeStatics();
+
+		try (InputStream in = CardSettings.class.getResourceAsStream(Path.SettingsPath + "cardLibrary.json")) {
+			Gson reader = new Gson();
+			settings = reader.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), Settings.class);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void createCards() {
 		cards = new ArrayList<Card>();
 
-		createCard(BasicStrike.class);
-		createCard(BasicDefend.class);
+		for (String cardId : settings.cards) {
+			createCard(cardId);
+		}
 
 		registerCards();
 		setLockStatus();
@@ -40,24 +53,13 @@ public class CardLibrary {
 		return cardSettings.get(cardId);
 	}
 
-	private void createCard(Class cardClass) {
-		String cardId = cardClass.getSimpleName();
-		System.out.println("createCard cardId " + cardId);
+	private void createCard(String cardId) {
 		// Create and save the card setting so that the card instance can load it by name later
 		CardSettings s = new CardSettings(cardId);
-		s.print();
 		cardSettings.put(cardId, s);
-		Card card = instantiateCard(cardClass);
-		cards.add(card);
-	}
 
-	private Card instantiateCard(Class cardClass) {
-		try {
-			Card card = (Card) cardClass.newInstance();
-			return card;
-		} catch (InstantiationException | IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
+		Card card = new Card(cardId);
+		cards.add(card);
 	}
 
 	private void registerCards() {
@@ -66,7 +68,6 @@ public class CardLibrary {
 			BaseMod.addCard(card);
 		}
 	}
-
 
 	private void setLockStatus() {
 		for (int i = 0; i < cards.size(); i++) {
@@ -78,5 +79,7 @@ public class CardLibrary {
 		}
 	}
 
-
+	private static class Settings {
+		public String[] cards;
+	}
 }

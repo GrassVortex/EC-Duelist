@@ -1,0 +1,17 @@
+{
+  "type": "POWER",
+  "color": "ECDuelist",
+  "stsTags": [
+  ],
+  "modTags": [
+  ],
+  "image": "Attack.png",
+  "background": {
+    "small": "512/bg_power_default_gray.png",
+    "large": "1024/bg_power_default_gray.png"
+  },
+  "orb": {
+    "small": "512/card_default_gray_orb.png",
+    "large": "1024/card_default_gray_orb.png"
+  }
+}

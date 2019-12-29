@@ -1,0 +1,17 @@
+{
+  "bases": [
+    "BasicStrike"
+  ],
+  "id": "SuperAttack",
+  "cost": "1",
+  "modTags": [
+  ],
+  "actions": [
+    {
+      "type": "Damage",
+      "damage": 150,
+      "damageType": "NORMAL",
+      "attackEffect": "SLASH_HORIZONTAL"
+    }
+  ]
+}
