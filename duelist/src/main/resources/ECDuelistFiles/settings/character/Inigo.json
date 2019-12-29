@@ -28,7 +28,16 @@
   "hitBoxHeight": 290,
   "energyPerTurn": 5,
   "startingHP": 100,
-  "maxHP": 171,
-  "startingGold": 120,
-  "cardDraw": 5
+  "maxHP": 321,
+  "startingGold": 456,
+  "cardDraw": 7,
+  "startingHand": [
+    "BasicStrike",
+    "BasicStrike",
+    "BasicStrike",
+    "BasicStrike",
+    "BasicDefend",
+    "BasicDefend",
+    "BasicDefend"
+  ]
 }
