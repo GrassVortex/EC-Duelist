@@ -1,5 +1,6 @@
 package ECDuelist.Characters;
 
+import ECDuelist.Cards.BasicDefend;
 import ECDuelist.Cards.BasicStrike;
 import ECDuelist.ModStartup;
 import ECDuelist.Utils.Constants;
@@ -125,6 +126,11 @@ public class Inigo extends
 	public ArrayList<String> getStartingDeck() {
 		ArrayList<String> cards = new ArrayList<String>();
 		cards.add(BasicStrike.PrefixedId);
+		cards.add(BasicStrike.PrefixedId);
+		cards.add(BasicStrike.PrefixedId);
+		cards.add(BasicDefend.PrefixedId);
+		cards.add(BasicDefend.PrefixedId);
+		cards.add(BasicDefend.PrefixedId);
 		return cards;
 	}
 
