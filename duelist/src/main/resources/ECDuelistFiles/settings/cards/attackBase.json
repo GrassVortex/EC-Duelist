@@ -4,6 +4,7 @@
   "stsTags": [
     "STRIKE"
   ],
+  "image": "Attack.png",
   "background": {
     "small": "512/bg_attack_default_gray.png",
     "large": "1024/bg_attack_default_gray.png"
