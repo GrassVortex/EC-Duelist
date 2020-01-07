@@ -236,7 +236,12 @@ public class Inigo extends
 	@Override
 	public AbstractGameAction.AttackEffect[] getSpireHeartSlashEffect() {
 		// TODO Add at least one effect or the game crashes when approaching the heart.
-		return new AbstractGameAction.AttackEffect[0];
+		return new AbstractGameAction.AttackEffect[]{
+				  AbstractGameAction.AttackEffect.SLASH_DIAGONAL,
+				  AbstractGameAction.AttackEffect.SLASH_HORIZONTAL,
+				  AbstractGameAction.AttackEffect.SLASH_VERTICAL,
+				  AbstractGameAction.AttackEffect.SLASH_DIAGONAL
+		};
 	}
 
 	// The vampire events refer to the base game characters as "brother", "sister",
