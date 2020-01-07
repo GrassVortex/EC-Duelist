@@ -9,4 +9,6 @@ public abstract class ActionBase {
 	public abstract void initialize(Card card);
 
 	public abstract AbstractGameAction[] createActions(AbstractPlayer player, AbstractMonster monster, Card card);
+
+	public abstract void upgradeCard(Card card);
 }

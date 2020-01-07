@@ -55,7 +55,16 @@ public class Card extends
 
 	@Override
 	public void upgrade() {
-		// TODO handle settings controlled upgrades somehow
+		if (!upgraded) {
+			upgradeName();
+
+			for (ActionBase ca : cardActions) {
+				ca.upgradeCard(this);
+			}
+
+			upgraded = true;
+			initializeDescription();
+		}
 	}
 
 	@Override
@@ -65,9 +74,27 @@ public class Card extends
 			Collections.addAll(actionsToAdd, ca.createActions(abstractPlayer, abstractMonster, this));
 		}
 
+		// Potential for some action filtering here, like make sure conditions are fulfilled
+
 		for (AbstractGameAction aga : actionsToAdd){
 			AbstractDungeon.actionManager.addToBottom(aga);
 		}
+	}
+
+	public void action_upgradeDamage(int amount){
+		upgradeDamage(amount);
+	}
+
+	public void action_upgradeBlock(int amount){
+		upgradeBlock(amount);
+	}
+
+	public void action_upgradeMagicNumber(int amount){
+		upgradeMagicNumber(amount);
+	}
+
+	public void action_upgradeBaseCost(int newBaseCost){
+		upgradeBaseCost(newBaseCost);
 	}
 
 }

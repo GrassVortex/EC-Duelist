@@ -25,6 +25,7 @@ public class ActionLibrary {
 	public void registerActions() {
 		Damage.registerTo(this);
 		Block.registerTo(this);
+		UpgradeCost.registerTo(this);
 	}
 
 	public static ActionBase createAction(ActionSettings settings) {

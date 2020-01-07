@@ -40,6 +40,13 @@ public class Damage extends
 		return actions;
 	}
 
+	@Override
+	public void upgradeCard(Card card) {
+		if (settings.upgradedDamage != null) {
+			card.action_upgradeDamage(settings.upgradedDamage - settings.damage);
+		}
+	}
+
 	private static class Factory implements
 			  ActionLibrary.IActionFactory {
 		@Override
@@ -53,66 +60,27 @@ public class Damage extends
 			  ActionLibrary.ISettingsLoader {
 		@Override
 		public ActionSettings parseAction(JsonObject json) {
-			Merger merger = new Merger();
-			Settings.RawSettings rawSettings = ActionSettings.loadRawSettings(json, merger, Settings.RawSettings.class);
 
-			Settings settings = new Settings();
-			settings.damage = Integer.parseInt(rawSettings.damage);
-			settings.damageType = DamageInfo.DamageType.valueOf(rawSettings.damageType);
-			settings.attackEffect = AbstractGameAction.AttackEffect.valueOf(rawSettings.attackEffect);
+			Gson reader = new Gson();
+			Settings settings = reader.fromJson(json, Settings.class);
 
 			return settings;
 		}
 	}
 
-	private static class Merger implements
-			  ActionSettings.IMerger<Settings.RawSettings> {
-		@Override
-		public Settings.RawSettings mergeSettings(Settings.RawSettings a, Settings.RawSettings b) {
-			Settings.RawSettings result = new Settings.RawSettings();
-			result.damage = SettingsHelper.coalesce(a.damage, b.damage);
-			result.damageType = SettingsHelper.coalesce(a.damageType, b.damageType);
-			result.attackEffect = SettingsHelper.coalesce(a.attackEffect, b.attackEffect);
-
-			return result;
-		}
-	}
 
 	public static class Settings extends
 			  ActionSettings {
 
 		public int damage;
+		public Integer upgradedDamage;
 		public DamageInfo.DamageType damageType;
 		public AbstractGameAction.AttackEffect attackEffect;
-
-		private RawSettings rawSettings;
 
 		public Settings() {
 			super(Damage.class.getSimpleName());
 		}
 
-		public static class RawSettings implements
-				  ActionSettings.IRawSettings {
 
-			public String[] bases;
-			public String damage;
-			public String damageType;
-			public String attackEffect;
-
-			@Override
-			public IRawSettings clone() {
-				RawSettings settings = new RawSettings();
-				settings.bases = bases.clone();
-				settings.damage = damage;
-				settings.damageType = damageType;
-				settings.attackEffect = attackEffect;
-				return settings;
-			}
-
-			@Override
-			public String[] getBases() {
-				return bases;
-			}
-		}
 	}
 }
